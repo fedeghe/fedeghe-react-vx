@@ -14,17 +14,16 @@
  describe('reducer - basic', function () {
      const { init } = reducerFactory();
  
-     it('initialise as expected - basic initialization', () => {
+     it('initialise as expected - basic defaulted initialization', () => {
         const state = init(zeroConfig);
         expect(state.settings).toMatchObject({
             trackTimes: false,
             warning: 0,
-            gap: 0
+            gap: 3,
+            mode: 'table'
         });
 
         expect(state.headers.length).toBe(3);
      });
  
- 
-
  });

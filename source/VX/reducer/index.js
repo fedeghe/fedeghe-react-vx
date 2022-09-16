@@ -5,14 +5,15 @@ import {
 } from './../utils';
 
 import {
-    CMPNAME, GAP, WIDTH, HEIGHT, ITEM_HEIGHT, ITEM_WIDTH,
+    CMPNAME, LIB, GAP, WIDTH, HEIGHT, ITEM_HEIGHT, ITEM_WIDTH,
     RVX_ID, DEBOUNCE_SCROLLING, DEBOUNCE_FILTERING,
     NO_FILTER_DATA_MESSAGE, GROUP_COMPONENT_HEIGHT,
     UNGROUPED_LABEL, FILTERS, DEFAULT_LOADER, UIE,
-    GLOBAL_FILTER, WARNING, MODES,
+    GLOBAL_FILTER, WARNING, MODES, MODE,
 } from './../constants';
+import ERRORS from './errors'
 
-const INIT = Symbol('initialise')
+const INIT = Symbol('initialise');
 
 
 // eslint-disable-next-line one-var
@@ -21,25 +22,32 @@ export const ACTION_TYPES = {
 };
 
 // eslint-disable-next-line one-var
-const actions = {
+const opts = {lib: LIB},
+    actions = {
         [INIT]: ({config}) => {
             const {
-                trackTimes = false,
-                warning = 0,
-                headers,
-                gap = GAP
+                headers = [],
+                settings: {
+                    trackTimes = false,
+                    warning = 0,
+                    gap = GAP,
+                    mode = MODE
+                } = {}
             } = config;
+            
+            throwIf({condition:!headers?.length, message: ERRORS.NO_HEADERS_PROVIDED.description, opts});
+            throwIf({condition:!MODES.includes(mode), message: ERRORS.INIT_UNEXPECTED_MODE.description, opts});
             return {
                 settings: {
                     trackTimes,
                     warning,
-                    gap
+                    gap,
+                    mode
                 },
                 headers
-            }
+            };
         },
     },
-    lib = CMPNAME,
     reducer = (oldState, action) => {
         const { payload = {}, type } = action,
             { x = null } = oldState,

@@ -1,0 +1,98 @@
+/**
+ * @jest-environment jsdom
+ */
+ import reducerFactory, {ACTION_TYPES} from '../source/VX/reducer'
+ import zeroConfig from './configs/zero'
+ import REDUCER_ERRORS from './../source/VX/reducer/errors'
+ import {getErrorMessage} from './../source/VX/utils.js'
+
+ import {
+     WIDTH, HEIGHT, ITEM_WIDTH, ITEM_HEIGHT,
+     DEBOUNCE_SCROLLING, DEBOUNCE_FILTERING,
+     LIB
+ }  from '../source/VX/constants'
+ import {getConfig} from './utils'
+
+ const opts = {lib: LIB};
+ 
+ 
+ 
+ describe('reducer - fail init - throw the expected', function () {
+     const { init } = reducerFactory();
+    
+     describe('mode', () => {
+        it('null', () => {
+            const cnf = getConfig(zeroConfig)
+            cnf.mode = null; // not in MODES
+            try{
+                init(cnf);
+            } catch(e) {
+                expect(e).toBe(getErrorMessage({
+                    message: REDUCER_ERRORS.INIT_UNEXPECTED_MODE.description,
+                    opts
+                }))
+            }
+         });   
+         it('empty', () => {
+            const cnf = getConfig(zeroConfig)
+            cnf.mode = ''; // not in MODES
+            try{
+                init(cnf);
+            } catch(e) {
+                expect(e).toBe(getErrorMessage({
+                    message: REDUCER_ERRORS.INIT_UNEXPECTED_MODE.description,
+                    opts
+                }))
+            }
+         }); 
+         it('unexpected', () => {
+            const cnf = getConfig(zeroConfig)
+            cnf.mode = 'WUN'; // not in MODES
+            try{
+                init(cnf);
+            } catch(e) {
+                expect(e).toBe(getErrorMessage({
+                    message: REDUCER_ERRORS.INIT_UNEXPECTED_MODE.description,
+                    opts
+                }))
+            }
+         });   
+     });
+     
+     
+     
+
+     describe('headers', () => {
+        it('null', () => {
+            const cnf = getConfig(zeroConfig)
+            cnf.headers = null; // not in MODES
+            try{
+                init(cnf);
+            } catch(e) {
+                expect(e).toBe(getErrorMessage({
+                    message: REDUCER_ERRORS.NO_HEADERS_PROVIDED.description,
+                    opts
+                }))
+            }
+         });
+    
+         it('empty', () => {
+            const cnf = getConfig(zeroConfig)
+            cnf.headers = []; // not in MODES
+            try{
+                init(cnf);
+            } catch(e) {
+                expect(e).toBe(getErrorMessage({
+                    message: REDUCER_ERRORS.NO_HEADERS_PROVIDED.description,
+                    opts
+                }))
+            }
+         });
+     });
+     
+
+     
+ 
+ 
+
+ });

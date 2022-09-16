@@ -39,9 +39,10 @@ const prefix = 'RVX_',
     },
     throwIf = ({ condition, message, opts }) => {
         if (condition) {
-            throw `${opts.lib.toUpperCase()} 🚨 ${message}`;
+            throw getErrorMessage({message, opts});
         }
     },
+    getErrorMessage = ({message, opts }) => `${opts.lib.toUpperCase()} 🚨 ${message}`,
     uniqueID = {
         toString: () => {
             count += 1;
@@ -55,5 +56,6 @@ export {
     debounce,
     asXsv,
     asJson,
+    getErrorMessage,
     trakTime, doWarn, doThrow, throwIf, uniqueID
 };

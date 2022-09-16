@@ -1,0 +1,1 @@
+export const getConfig = cnf => JSON.parse(JSON.stringify(cnf));

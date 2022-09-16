@@ -1,6 +1,7 @@
 import React from 'react';
 // the name of the component
 export const CMPNAME = 'react-vx',
+    LIB = 'react-vx',
     // how many lines extra viewport up and down before virtualization ? 
     GAP = 3,
 
@@ -8,7 +9,6 @@ export const CMPNAME = 'react-vx',
     WIDTH = 1200,
     HEIGHT = 800,
 
-    MODE = 'table',
     
     /**
      * item size:
@@ -19,30 +19,31 @@ export const CMPNAME = 'react-vx',
     
     // group component height 
     GROUP_COMPONENT_HEIGHT = 20,
-
+    
     // global filter
     GLOBAL_FILTER = ({rowField, globalFilterUserValue}) => `${rowField}`.includes(globalFilterUserValue),
-
+    
     // id appended string
     RVX_ID = '_ID',
-
+    
     // debouning values
     DEBOUNCE_SCROLLING = 50,
     DEBOUNCE_FILTERING = 50,
-
+    
     DEFAULT_LOADER = () => (<div>loading</div>),
-
+    
     // no data message
     NO_FILTER_DATA_MESSAGE = 'no data',
-
+    
     // ungrouped group label
     UNGROUPED_LABEL = 'ungrouped',
-
+    
     // unfilter families
     FILTERS = {
         ALL : 'ALL',
         GLOBAL : 'GLOBAL',
         FIELDS : 'FIELDS',
     },
+    MODE = 'table',
     MODES = ['table', 'grid'],
     UIE = 'data-uie';
