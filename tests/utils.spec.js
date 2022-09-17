@@ -1,4 +1,3 @@
-
 import {
     isFunction,
     debounce,
@@ -13,8 +12,6 @@ import {
     doThrow, throwIf,
     uniqueID
 } from '../source/RVX/utils'
-
-
 
 describe('utils functions work as expected', function () {
     let info, warn,
