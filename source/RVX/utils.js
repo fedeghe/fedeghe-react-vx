@@ -30,21 +30,21 @@ const prefix = 'RVX_',
         return lines.join("\n");
     },
     asJson = removeID,
-    trakTime = ({ what, time, opts }) =>
-        console.info(`%c${opts.lib.toUpperCase()} 🐢 ${what} spent ${time}ms`, 'color:DodgerBlue'),
-    doWarn = ({ message, opts }) => 
-        opts.warning && console.warn(getWarnMessage({message, opts})),
-    doThrow = ({ message, opts }) => {
-        throw getErrorMessage({message, opts});
-    },
-    warnIf = ({ condition, message, opts }) => {
-        if (condition) doWarn({message, opts});
-    },
-    throwIf = ({ condition, message, opts }) => {
-        condition && doThrow({message, opts});
-    },
+
+    trakTime = ({ what, time, opts }) => console.info(`%c${opts.lib.toUpperCase()} 🐢 ${what} spent ${time}ms`, 'color:DodgerBlue'),
+
+    doWarn = ({ message, opts }) => opts.warning && console.warn(getWarnMessage({message, opts})),
+
+    doThrow = ({ message, opts }) => {throw getErrorMessage({message, opts});},
+
+    warnIf = ({ condition, message, opts }) => condition && doWarn({message, opts}),
+
+    throwIf = ({ condition, message, opts }) => condition && doThrow({message, opts}),
+
     getErrorMessage = ({message, opts }) => `${opts.lib.toUpperCase()} 🚨 ${message}`,
+
     getWarnMessage = ({message, opts }) => `${opts.lib.toUpperCase()} 🙉 ${message}`,
+
     uniqueID = {
         toString: () => {
             count += 1;
