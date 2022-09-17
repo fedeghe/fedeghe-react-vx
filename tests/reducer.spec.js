@@ -12,7 +12,7 @@
  
  
  describe('reducer - basic', function () {
-     const { init } = reducerFactory();
+     const { init, reducer } = reducerFactory();
  
      it('initialise as expected - basic defaulted initialization', () => {
         const state = init(zeroConfig);
@@ -27,6 +27,11 @@
             filtering: 50,
         });
         expect(state.headers.length).toBe(3);
+     });
+     it('does nothing on unexpected action type', () => {
+        const state = init(zeroConfig),
+            newState = reducer(state, {type: 'not expected action type'});
+        expect(JSON.stringify(newState)).toBe(JSON.stringify(newState))
      });
  
  });
