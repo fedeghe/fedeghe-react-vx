@@ -33,7 +33,7 @@ const prefix = 'RVX_',
 
     doThrow = ({ message, opts }) => {throw getErrorMessage({message, opts});},
 
-    warnIf = ({ condition, message, opts }) => condition && doWarn({message, opts}),
+    mayWarnIf = ({ condition, message, opts }) => condition && doWarn({message, opts}),
 
     throwIf = ({ condition, message, opts }) => condition && doThrow({message, opts}),
 
@@ -59,7 +59,7 @@ export {
     getErrorMessage,
     getWarnMessage,
     trakTime,
-    doWarn, warnIf,
+    doWarn, mayWarnIf,
     doThrow, throwIf,
     uniqueID
 };

@@ -1,9 +1,8 @@
-import DefaultGridItem from './../components/DefaultGridItem'
-
+import DefaultGridItem from './../components/DefaultGridItem';
 
 import {
     doThrow, uniqueID, trakTime,
-    doWarn, throwIf, warnIf, isFunction
+    doWarn, throwIf, mayWarnIf, isFunction
 } from '../utils';
 
 import {
@@ -18,8 +17,6 @@ import ERRORS from './errors';
 import WARNS from './warns';
 
 
-
-// eslint-disable-next-line one-var
 const opts = {lib: LIB},
     actions = {
         [ACTION_TYPES.INIT]: ({config}) => {
@@ -45,9 +42,10 @@ const opts = {lib: LIB},
             throwIf({ condition: headers.some(h => !('key' in h)), message: ERRORS.HEADERS_UNKEYED.description, opts});
             throwIf({ condition: !MODES.includes(mode), message: ERRORS.INIT_UNEXPECTED_MODE.description, opts });
             throwIf({ condition: gap < 0, message: ERRORS.GAP_NEGATIVE.description, opts});
+            
             if (warning) {
-                warnIf({ condition: mode === 'grid' && !Item, message: WARNS.GRIND_ITEM_NOT_SET.description, opts });
-                warnIf({ condition: !data || data.length === 0, message: WARNS.NO_DATA.description, opts });
+                mayWarnIf({ condition: mode === 'grid' && !Item, message: WARNS.GRIND_ITEM_NOT_SET.description, opts });
+                mayWarnIf({ condition: !data || data.length === 0, message: WARNS.NO_DATA.description, opts });
             }
 
             return {
@@ -68,6 +66,7 @@ const opts = {lib: LIB},
             };
         },
     },
+
     reducer = (oldState, action) => {
         const { payload = {}, type } = action,
             { x = null } = oldState,

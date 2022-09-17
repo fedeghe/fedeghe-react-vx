@@ -8,7 +8,7 @@ import {
     getErrorMessage,
     getWarnMessage,
     trakTime,
-    doWarn, warnIf,
+    doWarn, mayWarnIf,
     doThrow, throwIf,
     uniqueID
 } from '../source/RVX/utils'
@@ -113,11 +113,11 @@ describe('utils functions work as expected', function () {
             expect(e).toBe('MYLIB 🚨 throwing error')
         }
     });
-    it('warnIf - warning active/inactive', () => {
-        warnIf({condition: true, message: 'watch your back', opts: {lib: 'mylib', warning: true}});
+    it('mayWarnIf - warning active/inactive', () => {
+        mayWarnIf({condition: true, message: 'watch your back', opts: {lib: 'mylib', warning: true}});
         expect(spyWarn).toHaveBeenLastCalledWith("MYLIB 🙉 watch your back");
 
-        warnIf({condition: true, message: 'watch my back', opts: {lib: 'mylib'}});
+        mayWarnIf({condition: true, message: 'watch my back', opts: {lib: 'mylib'}});
         expect(spyWarn).toHaveBeenLastCalledWith("MYLIB 🙉 watch your back");
     });
     it('throwIf - condition true/false', () => {
