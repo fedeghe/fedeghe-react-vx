@@ -17,10 +17,10 @@
  
  
  
- describe('reducer - fail init - throw the expected', function () {
+ describe('reducer - init - throws the expected', function () {
      const { init } = reducerFactory();
     
-     describe('mode', () => {
+     describe('when `mode` is', () => {
         it('null', () => {
             const cnf = getConfig(zeroConfig)
             cnf.mode = null; // not in MODES
@@ -59,10 +59,7 @@
          });   
      });
      
-     
-     
-
-     describe('headers', () => {
+     describe('when `headers` is', () => {
         it('null', () => {
             const cnf = getConfig(zeroConfig)
             cnf.headers = null; // not in MODES

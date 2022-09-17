@@ -20,9 +20,12 @@
             trackTimes: false,
             warning: 0,
             gap: 3,
-            mode: 'table'
+            mode: 'table',
         });
-
+        expect(state.settings.debounceTimes).toMatchObject({
+            scrolling: 50,
+            filtering: 50,
+        });
         expect(state.headers.length).toBe(3);
      });
  

@@ -11,38 +11,50 @@ import {
     UNGROUPED_LABEL, FILTERS, DEFAULT_LOADER, UIE,
     GLOBAL_FILTER, WARNING, MODES, MODE,
 } from './../constants';
-import ERRORS from './errors'
+import { ACTION_TYPES } from './actions';
+import ERRORS from './errors';
 
-const INIT = Symbol('initialise');
 
-
-// eslint-disable-next-line one-var
-export const ACTION_TYPES = {
-    INIT
-};
 
 // eslint-disable-next-line one-var
 const opts = {lib: LIB},
     actions = {
-        [INIT]: ({config}) => {
+        [ACTION_TYPES.INIT]: ({config}) => {
             const {
                 headers = [],
                 settings: {
                     trackTimes = false,
                     warning = 0,
                     gap = GAP,
-                    mode = MODE
+                    mode = MODE,
+                    debounceTimes: {
+                        scrolling = DEBOUNCE_SCROLLING,
+                        filtering = DEBOUNCE_FILTERING
+                    } = {}
                 } = {}
             } = config;
-            
-            throwIf({condition:!headers?.length, message: ERRORS.NO_HEADERS_PROVIDED.description, opts});
-            throwIf({condition:!MODES.includes(mode), message: ERRORS.INIT_UNEXPECTED_MODE.description, opts});
+
+            throwIf({
+                condition:!headers?.length,
+                message: ERRORS.NO_HEADERS_PROVIDED.description,
+                opts
+            });
+            throwIf({
+                condition:!MODES.includes(mode),
+                message: ERRORS.INIT_UNEXPECTED_MODE.description,
+                opts
+            });
+
             return {
                 settings: {
                     trackTimes,
                     warning,
                     gap,
-                    mode
+                    mode,
+                    debounceTimes: {
+                        scrolling,
+                        filtering,
+                    }
                 },
                 headers
             };
@@ -54,13 +66,13 @@ const opts = {lib: LIB},
             {trakTimes, warning} = oldState,
 
             params = {
-                [INIT]: {config: payload}
+                [ACTION_TYPES.INIT]: () => ({config: payload})
             }[type] || {};
 
         if (type in actions) {
             const newState = {
                 ...oldState,
-                ...actions[type](params)
+                ...actions[type](params())
             };
 
             return newState;
@@ -68,7 +80,7 @@ const opts = {lib: LIB},
         return oldState;
     },
 
-    init = (cnf = {}) => reducer({}, {type: INIT, payload: cnf});
+    init = (cnf = {}) => reducer({}, {type: ACTION_TYPES.INIT, payload: cnf});
 
 export default () => ({
     reducer,
