@@ -11,6 +11,7 @@
         "test": "jest -u",
         "testwatch": "jest -u --watchAll",
         "cover": "jest --coverage --collectCoverageFrom='source/**/*.js'",
+        "coverw": "jest --coverage --collectCoverageFrom='source/**/*.js' --watch",
         "lint": "eslint ./source/VX/*.*",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook"
