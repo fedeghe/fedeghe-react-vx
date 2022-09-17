@@ -1,8 +1,10 @@
+import DefaultGridItem from './../components/DefaultGridItem'
+
 
 import {
     doThrow, uniqueID, trakTime,
-    doWarn, throwIf, isFunction
-} from './../utils';
+    doWarn, throwIf, warnIf, isFunction
+} from '../utils';
 
 import {
     CMPNAME, LIB, GAP, WIDTH, HEIGHT, ITEM_HEIGHT, ITEM_WIDTH,
@@ -10,9 +12,10 @@ import {
     NO_FILTER_DATA_MESSAGE, GROUP_COMPONENT_HEIGHT,
     UNGROUPED_LABEL, FILTERS, DEFAULT_LOADER, UIE,
     GLOBAL_FILTER, WARNING, MODES, MODE,
-} from './../constants';
+} from '../constants';
 import { ACTION_TYPES } from './actions';
 import ERRORS from './errors';
+import WARNS from './warns';
 
 
 
@@ -22,6 +25,7 @@ const opts = {lib: LIB},
         [ACTION_TYPES.INIT]: ({config}) => {
             const {
                 headers = [],
+                Item,
                 settings: {
                     trackTimes = false,
                     warning = 0,
@@ -33,6 +37,7 @@ const opts = {lib: LIB},
                     } = {}
                 } = {}
             } = config;
+            opts.warning = warning;
 
             throwIf({
                 condition:!headers?.length,
@@ -42,6 +47,12 @@ const opts = {lib: LIB},
             throwIf({
                 condition:!MODES.includes(mode),
                 message: ERRORS.INIT_UNEXPECTED_MODE.description,
+                opts
+            });
+
+            warnIf({
+                condition: mode === 'grid' && !Item,
+                message: WARNS.GRIND_ITEM_NOT_SET.description,
                 opts
             });
 
@@ -56,6 +67,7 @@ const opts = {lib: LIB},
                         filtering,
                     }
                 },
+                Item: Item || DefaultGridItem,
                 headers
             };
         },

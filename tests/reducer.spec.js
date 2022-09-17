@@ -1,13 +1,13 @@
 /**
  * @jest-environment jsdom
  */
- import reducerFactory, {ACTION_TYPES} from '../source/VX/reducer'
+ import reducerFactory, {ACTION_TYPES} from '../source/RVX/reducer'
  import zeroConfig from './configs/zero'
 
  import {
      WIDTH, HEIGHT, ITEM_WIDTH, ITEM_HEIGHT,
      DEBOUNCE_SCROLLING, DEBOUNCE_FILTERING,
- }  from './../source/VX/constants'
+ }  from '../source/RVX/constants'
  
  
  

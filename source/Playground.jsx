@@ -1,5 +1,4 @@
-import React from 'react'
+import React from 'react';
+import RVX from './RVX';
 
-export default () => {
-    <p>Hello Playground</p>
-};
+export default () => (<RVX/>);

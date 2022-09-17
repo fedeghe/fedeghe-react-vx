@@ -32,17 +32,19 @@ const prefix = 'RVX_',
     asJson = removeID,
     trakTime = ({ what, time, opts }) =>
         console.info(`%c${opts.lib.toUpperCase()} 🐢 ${what} spent ${time}ms`, 'color:DodgerBlue'),
-    doWarn = ({ message, opts }) =>
-        opts.warning && console.warn(`${opts.lib.toUpperCase()} 🙉 ${message}`),
+    doWarn = ({ message, opts }) => 
+        opts.warning && console.warn(getWarnMessage({message, opts})),
     doThrow = ({ message, opts }) => {
-        throw `${opts.lib.toUpperCase()} 🚨 ${message}`;
+        throw getErrorMessage({message, opts});
+    },
+    warnIf = ({ condition, message, opts }) => {
+        if (condition) doWarn({message, opts});
     },
     throwIf = ({ condition, message, opts }) => {
-        if (condition) {
-            throw getErrorMessage({message, opts});
-        }
+        condition && doThrow({message, opts});
     },
     getErrorMessage = ({message, opts }) => `${opts.lib.toUpperCase()} 🚨 ${message}`,
+    getWarnMessage = ({message, opts }) => `${opts.lib.toUpperCase()} 🙉 ${message}`,
     uniqueID = {
         toString: () => {
             count += 1;
@@ -57,5 +59,9 @@ export {
     asXsv,
     asJson,
     getErrorMessage,
-    trakTime, doWarn, doThrow, throwIf, uniqueID
+    getWarnMessage,
+    trakTime,
+    doWarn, warnIf,
+    doThrow, throwIf,
+    uniqueID
 };

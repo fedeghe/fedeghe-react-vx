@@ -1,16 +1,16 @@
 /**
  * @jest-environment jsdom
  */
- import reducerFactory, {ACTION_TYPES} from '../source/VX/reducer'
+ import reducerFactory from '../source/RVX/reducer'
  import zeroConfig from './configs/zero'
- import REDUCER_ERRORS from './../source/VX/reducer/errors'
- import {getErrorMessage} from './../source/VX/utils.js'
+ import REDUCER_ERRORS from '../source/RVX/reducer/errors'
+ import {getErrorMessage} from '../source/RVX/utils.js'
 
  import {
      WIDTH, HEIGHT, ITEM_WIDTH, ITEM_HEIGHT,
      DEBOUNCE_SCROLLING, DEBOUNCE_FILTERING,
      LIB
- }  from '../source/VX/constants'
+ }  from '../source/RVX/constants'
  import {getConfig} from './utils'
 
  const opts = {lib: LIB};
@@ -86,6 +86,8 @@
             }
          });
      });
+
+     
      
 
      
