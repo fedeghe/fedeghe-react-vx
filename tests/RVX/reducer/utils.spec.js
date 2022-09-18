@@ -40,32 +40,33 @@ describe('getInitialGroupedData - work as expected', function () {
     afterEach(jest.restoreAllMocks);
 
     describe('the two common mode driven cases', () => {
-        each([[1, 100], [4, 25], [2, 34], [3, 33], [10, 10]]).test(
-            'returns the expected %d items => %d%',
-            (elementsPerLine, _) => {
-                const initialGroupedData = getInitialGroupedData({
-                    data,
-                    grouping: {
-                        groups,
-                        groupHeader: {
-                            Component: () => {},
-                            height: 10
-                        },
-                        ungroupedLabel,
-                        collapsible : true
-                    },
-                    elementsPerLine,
-                });
 
-                groupLabels.forEach(groupLabel => {
-                    expect(groupLabel in initialGroupedData).toBeTruthy();
-                    expect(initialGroupedData[groupLabel].lines).toBe(getLinesNumber({entriesLength: nums[groupLabel], elementsPerLine}));
-                    expect(initialGroupedData[groupLabel].entries.length).toBe(nums[groupLabel]);
-                    expect(initialGroupedData[groupLabel].collapsed).toBe(false);
-                });
-            } 
-        );
+        each(
+            [[1, 100], [4, 25], [2, 34], [3, 33], [10, 10]]
+        ).test('returns the expected %d items => %d%', (elementsPerLine, _) => {
+            const initialGroupedData = getInitialGroupedData({
+                data,
+                grouping: {
+                    groups,
+                    groupHeader: {
+                        Component: () => {},
+                        height: 10
+                    },
+                    ungroupedLabel,
+                    collapsible : true
+                },
+                elementsPerLine,
+            });
+
+            groupLabels.forEach(groupLabel => {
+                expect(groupLabel in initialGroupedData).toBeTruthy();
+                expect(initialGroupedData[groupLabel].lines).toBe(getLinesNumber({entriesLength: nums[groupLabel], elementsPerLine}));
+                expect(initialGroupedData[groupLabel].entries.length).toBe(nums[groupLabel]);
+                expect(initialGroupedData[groupLabel].collapsed).toBe(false);
+            });
+        });
     });
+
 
     describe('should warn when warning flag is active and:', () => {
 
@@ -75,7 +76,6 @@ describe('getInitialGroupedData - work as expected', function () {
                     lib: 'my lib',
                     warning: true
                 };
-
             getInitialGroupedData({
                 data,
                 grouping: {
@@ -90,7 +90,6 @@ describe('getInitialGroupedData - work as expected', function () {
                 elementsPerLine,
                 opts
             });
-        
             expect(spyWarn).toHaveBeenCalledWith(getWarnMessage({
                 message: WARNS.OUTKAST_DATA.description,
                 params: {num: nums[ungroupedLabel]},
@@ -105,7 +104,6 @@ describe('getInitialGroupedData - work as expected', function () {
                     warning: true
                 },
                 impossibleGroupName = 'impossible';
-
             getInitialGroupedData({
                 data,
                 grouping: {
@@ -126,7 +124,6 @@ describe('getInitialGroupedData - work as expected', function () {
                 elementsPerLine,
                 opts
             });
-        
             expect(spyWarn).toHaveBeenCalledWith(getWarnMessage({
                 message: WARNS.EMPTY_GROUP.description,
                 params: {groupName: impossibleGroupName},
@@ -134,6 +131,7 @@ describe('getInitialGroupedData - work as expected', function () {
             }));
         });
     });
+
 
     describe('should trak times when trakTimes flag is active:', () => {
 
@@ -144,7 +142,6 @@ describe('getInitialGroupedData - work as expected', function () {
                     warning: true,
                     trakTimes: true
                 };
-
             getInitialGroupedData({
                 data,
                 grouping: {
@@ -159,7 +156,6 @@ describe('getInitialGroupedData - work as expected', function () {
                 elementsPerLine,
                 opts
             });
-        
             expect(spyInfo).toHaveBeenCalledTimes(1);
             // quite risky since in the example might take more than 0ms :D :D :D FAIL!
             expect(spyInfo).toHaveBeenCalledWith(...getTimeSpentMessage({params: {what: '__getGroupedInit', time: 0}, opts}));
