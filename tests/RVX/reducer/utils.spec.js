@@ -1,32 +1,19 @@
-import {
-    getLinesNumber,
-    getInitialGroupedData,
-} from '../source/RVX/reducer/utils'
-import {
-    getWarnMessage,
-    getTimeSpentMessage
-} from '../source/RVX/utils'
-import WARNS  from '../source/RVX/reducer/warns'
-import { generateRowData } from './utils'
-import data from './data/1001.json'
+import each from 'jest-each';
+
+import { getLinesNumber, getInitialGroupedData } from '../../../source/RVX/reducer/utils'
+import { getWarnMessage, getTimeSpentMessage } from '../../../source/RVX/utils'
+import WARNS  from '../../../source/RVX/reducer/warns'
+
+import data from './../../data/1001.json'
+import groups from './../../groups/group1001'
 
 describe('getInitialGroupedData - work as expected', function () {
     const ungroupedLabel = 'ungrouped group',
-        groups = [{
-            label: 'lower',
-            grouper: row => row.id <= 100
-        },{
-            label: 'mid',
-            grouper: row => row.id > 100 && row.id <= 200
-        },{
-            label: 'high',
-            grouper: row => row.id > 200 && row.id <= 800
-        }],
         nums = {
-            lower: 99,
-            mid: 114,
-            high: 598,
-            [ungroupedLabel]: 190
+            lower: 200,
+            mid: 300,
+            high: 400,
+            [ungroupedLabel]: 101
         },
         groupLabels = groups.map(g => g.label);
 
@@ -53,10 +40,10 @@ describe('getInitialGroupedData - work as expected', function () {
     afterEach(jest.restoreAllMocks);
 
     describe('the two common mode driven cases', () => {
-    
-        it('returns the expected - item 100% - table', () => {
-            const elementsPerLine = 1,
-                initialGroupedData = getInitialGroupedData({
+        each([[1, 100], [4, 25], [2, 34], [3, 33], [10, 10]]).test(
+            'returns the expected %d items => %d%',
+            (elementsPerLine, _) => {
+                const initialGroupedData = getInitialGroupedData({
                     data,
                     grouping: {
                         groups,
@@ -70,39 +57,15 @@ describe('getInitialGroupedData - work as expected', function () {
                     elementsPerLine,
                 });
 
-            groupLabels.forEach(groupLabel => {
-                expect(groupLabel in initialGroupedData).toBeTruthy()
-                expect(nums[groupLabel]).toBe(getLinesNumber({entriesLength: nums[groupLabel], elementsPerLine}))
-                expect(initialGroupedData[groupLabel].lines).toBe(nums[groupLabel])
-                expect(initialGroupedData[groupLabel].entries.length).toBe(nums[groupLabel])
-                expect(initialGroupedData[groupLabel].collapsed).toBe(false)
-            });
-        });
-
-        it('returns the expected - item 25% - grid', () => {
-            const elementsPerLine = 4,
-                initialGroupedData = getInitialGroupedData({
-                    data,
-                    grouping: {
-                        groups,
-                        groupHeader: {
-                            Component: () => {},
-                            height: 10
-                        },
-                        ungroupedLabel,
-                        collapsible : true
-                    },
-                    elementsPerLine,
+                groupLabels.forEach(groupLabel => {
+                    expect(groupLabel in initialGroupedData).toBeTruthy();
+                    expect(initialGroupedData[groupLabel].lines).toBe(getLinesNumber({entriesLength: nums[groupLabel], elementsPerLine}));
+                    expect(initialGroupedData[groupLabel].entries.length).toBe(nums[groupLabel]);
+                    expect(initialGroupedData[groupLabel].collapsed).toBe(false);
                 });
-            
-            groupLabels.forEach(groupLabel => {
-                expect(groupLabel in initialGroupedData).toBeTruthy()
-                expect(initialGroupedData[groupLabel].lines).toBe(getLinesNumber({entriesLength: nums[groupLabel], elementsPerLine}))
-                expect(initialGroupedData[groupLabel].entries.length).toBe(nums[groupLabel])
-                expect(initialGroupedData[groupLabel].collapsed).toBe(false)
-            });
-        });
-    })
+            } 
+        );
+    });
 
     describe('should warn when warning flag is active and:', () => {
 
@@ -170,7 +133,7 @@ describe('getInitialGroupedData - work as expected', function () {
                 opts
             }));
         });
-    })
+    });
 
     describe('should trak times when trakTimes flag is active:', () => {
 
@@ -199,10 +162,8 @@ describe('getInitialGroupedData - work as expected', function () {
         
             expect(spyInfo).toHaveBeenCalledTimes(1);
             // this is risky since in the example might take more than 0ms :D :D :D 
-            expect(spyInfo).toHaveBeenCalledWith(...getTimeSpentMessage({params: {what: '__getGroupedInit', time: 0}, opts}))
+            expect(spyInfo).toHaveBeenCalledWith(...getTimeSpentMessage({params: {what: '__getGroupedInit', time: 0}, opts}));
         });
 
-    })
-
-
+    });
 });
