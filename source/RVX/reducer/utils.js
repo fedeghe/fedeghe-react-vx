@@ -5,7 +5,7 @@ export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(en
     
 // eslint-disable-next-line one-var
 export const getInitialGroupedData = ({data, grouping, elementsPerLine, opts = {}}) => {
-        const trak = opts.trackTimes ? {start: +new Date} : null,
+        const trak = opts.trakTimes ? {start: +new Date} : null,
             {groups, ungroupedLabel, collapsible} = grouping,
             groupedEntries = data.reduce((acc, entry) => {
                 // find the first filter that let it pass, in case groups is not empty
@@ -45,6 +45,7 @@ export const getInitialGroupedData = ({data, grouping, elementsPerLine, opts = {
                 }
                 return acc;
             }, {});
+
         mayWarnIf({
             condition: ret[ungroupedLabel].entries.length > 0,
             message: WARNS.OUTKAST_DATA.description,

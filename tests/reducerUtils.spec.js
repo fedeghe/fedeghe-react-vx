@@ -7,6 +7,7 @@ import {
     asJson,
     getErrorMessage,
     getWarnMessage,
+    getTimeSpentMessage,
     paramsMessage,
     trakTime,
     doWarn, mayWarnIf,
@@ -93,8 +94,12 @@ describe('utils functions work as expected', function () {
     });
 
     it('trakTime', () => {
-        trakTime({what: 'methodX', time: 123, opts:{lib:'mylib'}})
-        expect(spyInfo).toHaveBeenLastCalledWith("%cMYLIB 🐢 methodX spent 123ms", "color:DodgerBlue");
+        const opts = {lib:'mylib'},
+            params = {what: 'methodX', time: 123};
+        trakTime({...params, opts})
+        expect(spyInfo).toHaveBeenLastCalledWith(
+            ...getTimeSpentMessage({params, opts})
+        );
     });
 
     it('doWarn - warning active/inactive', () => {

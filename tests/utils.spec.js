@@ -3,7 +3,8 @@ import {
     getInitialGroupedData,
 } from '../source/RVX/reducer/utils'
 import {
-    getWarnMessage
+    getWarnMessage,
+    getTimeSpentMessage
 } from '../source/RVX/utils'
 import WARNS  from '../source/RVX/reducer/warns'
 import { generateRowData } from './utils'
@@ -169,6 +170,37 @@ describe('getInitialGroupedData - work as expected', function () {
                 opts
             }));
         });
+    })
+
+    describe('should trak times when trakTimes flag is active:', () => {
+
+        it('tracks time as expected', () => {
+            const elementsPerLine = 4,
+                opts = {
+                    lib: 'my lib',
+                    warning: true,
+                    trakTimes: true
+                };
+
+            getInitialGroupedData({
+                data,
+                grouping: {
+                    groups,
+                    groupHeader: {
+                        Component: () => {},
+                        height: 10
+                    },
+                    ungroupedLabel,
+                    collapsible : true
+                },
+                elementsPerLine,
+                opts
+            });
+        
+            expect(spyInfo).toHaveBeenCalledTimes(1);
+            expect(spyInfo).toHaveBeenCalledWith(...getTimeSpentMessage({params: {what: '__getGroupedInit', time: 0}, opts}))
+        });
+
     })
 
 

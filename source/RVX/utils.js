@@ -27,7 +27,7 @@ const prefix = 'RVX_',
     },
     asJson = removeID,
 
-    trakTime = ({ what, time, opts }) => console.info(`%c${opts.lib.toUpperCase()} 🐢 ${what} spent ${time}ms`, 'color:DodgerBlue'),
+    trakTime = ({ what, time, opts }) => console.info(...getTimeSpentMessage({params: {what, time}, opts})),
 
     doWarn = ({ message, params = {}, opts }) => opts.warning && console.warn(getWarnMessage({message, params, opts})),
 
@@ -40,6 +40,11 @@ const prefix = 'RVX_',
     getErrorMessage = ({message, params = {}, opts }) => `${opts.lib.toUpperCase()} 🚨 ${paramsMessage({message, params})}`,
 
     getWarnMessage = ({message, params = {}, opts }) => `${opts.lib.toUpperCase()} 🙉 ${paramsMessage({message, params})}`,
+
+    getTimeSpentMessage = ({params = {what:'not specified', time: 'not specified'}, opts }) => ([
+        `%c${opts.lib.toUpperCase()} 🐢 ${paramsMessage({message: '%what% spent %time% ms', params})}`,
+        'color:DodgerBlue'
+    ]),
 
     paramsMessage = ({message, params = {}, leaveUnmatching = false}) =>
         Object.entries(params).reduce(
@@ -64,6 +69,7 @@ export {
     asJson,
     getErrorMessage,
     getWarnMessage,
+    getTimeSpentMessage,
     paramsMessage,
     trakTime,
     doWarn, mayWarnIf,
