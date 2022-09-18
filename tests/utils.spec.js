@@ -6,6 +6,25 @@ import { generateRowData } from './utils'
 import data from './data/1001.json'
 
 describe('getInitialGroupedData - work as expected', function () {
+    const ungroupedLabel = 'ungrouped group',
+        groups = [{
+            label: 'lower',
+            grouper: row => row.id <= 100
+        },{
+            label: 'mid',
+            grouper: row => row.id > 100 && row.id <= 200
+        },{
+            label: 'high',
+            grouper: row => row.id > 200 && row.id <= 800
+        }],
+        nums = {
+            lower: 99,
+            mid: 114,
+            high: 598,
+            [ungroupedLabel]: 190
+        },
+        groupLabels = groups.map(g => g.label);
+
     let info, warn,
         spyInfo, spyWarn;
     
@@ -28,19 +47,8 @@ describe('getInitialGroupedData - work as expected', function () {
     });
     afterEach(jest.restoreAllMocks);
     
-    it('returns the expected - item 100%', () => {
-        const ungroupedLabel = 'ungrouped group',
-            groups = [{
-                label: 'lower',
-                grouper: row => row.id <= 100
-            },{
-                label: 'mid',
-                grouper: row => row.id > 100 && row.id <= 200
-            },{
-                label: 'high',
-                grouper: row => row.id > 200 && row.id <= 800
-            }],
-            elementsPerLine = 1,
+    it('returns the expected - item 100% - table', () => {
+        const elementsPerLine = 1,
             initialGroupedData = getInitialGroupedData({
                 data,
                 grouping: {
@@ -53,44 +61,19 @@ describe('getInitialGroupedData - work as expected', function () {
                     collapsible : true
                 },
                 elementsPerLine,
-            }),
-            groupLabels = groups.map(g => g.label);
+            });
 
-        expect('lower' in initialGroupedData).toBeTruthy()
-        expect(initialGroupedData.lower.lines).toBe(99)
-        expect(initialGroupedData.lower.entries.length).toBe(99)
-
-        expect('mid' in initialGroupedData).toBeTruthy()
-        expect(initialGroupedData.mid.lines).toBe(114)
-        expect(initialGroupedData.mid.entries.length).toBe(114)
-
-        expect('high' in initialGroupedData).toBeTruthy()
-        expect(initialGroupedData.high.lines).toBe(598)
-        expect(initialGroupedData.high.entries.length).toBe(598)
-
-        expect(ungroupedLabel in initialGroupedData).toBeTruthy()
-        expect(initialGroupedData[ungroupedLabel].lines).toBe(190)
-        expect(initialGroupedData[ungroupedLabel].entries.length).toBe(190)
-        
         groupLabels.forEach(groupLabel => {
+            expect(groupLabel in initialGroupedData).toBeTruthy()
+            expect(nums[groupLabel]).toBe(getLinesNumber({entriesLength: nums[groupLabel], elementsPerLine}))
+            expect(initialGroupedData[groupLabel].lines).toBe(nums[groupLabel])
+            expect(initialGroupedData[groupLabel].entries.length).toBe(nums[groupLabel])
             expect(initialGroupedData[groupLabel].collapsed).toBe(false)
-        })
-        // expect(true).toBeFalsy()
+        });
     });
 
-    it('returns the expected - item 25%', () => {
-        const ungroupedLabel = 'ungrouped group',
-            groups = [{
-                label: 'lower',
-                grouper: row => row.id <= 100
-            },{
-                label: 'mid',
-                grouper: row => row.id > 100 && row.id <= 200
-            },{
-                label: 'high',
-                grouper: row => row.id > 200 && row.id <= 800
-            }],
-            elementsPerLine = 4,
+    it('returns the expected - item 25% - grid', () => {
+        const elementsPerLine = 4,
             initialGroupedData = getInitialGroupedData({
                 data,
                 grouping: {
@@ -103,35 +86,14 @@ describe('getInitialGroupedData - work as expected', function () {
                     collapsible : true
                 },
                 elementsPerLine,
-            }),
-            groupLabels = groups.map(g => g.label),
-            nums = {
-                lower: 99,
-                mid: 114,
-                high: 598,
-                [ungroupedLabel]: 190
-            };
-
-        expect('lower' in initialGroupedData).toBeTruthy()
-        expect(initialGroupedData.lower.lines).toBe(getLinesNumber({entriesLength: nums.lower, elementsPerLine}))
-        expect(initialGroupedData.lower.entries.length).toBe(nums.lower)
-
-        expect('mid' in initialGroupedData).toBeTruthy()
-        expect(initialGroupedData.mid.lines).toBe(getLinesNumber({entriesLength: nums.mid, elementsPerLine}))
-        expect(initialGroupedData.mid.entries.length).toBe(nums.mid)
-
-        expect('high' in initialGroupedData).toBeTruthy()
-        expect(initialGroupedData.high.lines).toBe(getLinesNumber({entriesLength: nums.high, elementsPerLine}))
-        expect(initialGroupedData.high.entries.length).toBe(nums.high)
-
-        expect(ungroupedLabel in initialGroupedData).toBeTruthy()
-        expect(initialGroupedData[ungroupedLabel].lines).toBe(getLinesNumber({entriesLength: nums[ungroupedLabel], elementsPerLine}))
-        expect(initialGroupedData[ungroupedLabel].entries.length).toBe(nums[ungroupedLabel])
+            });
         
         groupLabels.forEach(groupLabel => {
+            expect(groupLabel in initialGroupedData).toBeTruthy()
+            expect(initialGroupedData[groupLabel].lines).toBe(getLinesNumber({entriesLength: nums[groupLabel], elementsPerLine}))
+            expect(initialGroupedData[groupLabel].entries.length).toBe(nums[groupLabel])
             expect(initialGroupedData[groupLabel].collapsed).toBe(false)
-        })
-        // expect(true).toBeFalsy()
+        });
     });
 
 
