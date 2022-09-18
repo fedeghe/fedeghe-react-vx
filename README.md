@@ -1,9 +1,9 @@
 
 # react-vx (WIP)
 
-[![Coverage Status](https://coveralls.io/repos/github/fedeghe/fedeghe-react-vx/badge.svg?branch=master)](https://coveralls.io/github/fedeghe/fedeghe-react-vx?branch=master)
-[![Known Vulnerabilities](https://snyk.io/test/github/fedeghe/fedeghe-react-vx/badge.svg)](https://snyk.io/test/github/fedeghe/fedeghe-react-vx)
-[![Build Status](https://travis-ci.org/fedeghe/fedeghe-react-vx.svg?branch=master)](https://travis-ci.org/fedeghe/fedeghe-react-vx)
+[![Coverage Status](https://coveralls.io/repos/github/fedeghe/react-vx/badge.svg?branch=master)](https://coveralls.io/github/fedeghe/react-vx?branch=master)
+[![Known Vulnerabilities](https://snyk.io/test/github/fedeghe/react-vx/badge.svg)](https://snyk.io/test/github/fedeghe/react-vx)
+[![Build Status](https://travis-ci.org/fedeghe/react-vx.svg?branch=master)](https://travis-ci.org/fedeghe/react-vx)
 
 ## install
 
