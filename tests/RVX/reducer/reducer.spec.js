@@ -1,13 +1,13 @@
 /**
  * @jest-environment jsdom
  */
- import reducerFactory, {ACTION_TYPES} from '../source/RVX/reducer'
- import zeroConfig from './configs/zero'
+ import reducerFactory, {ACTION_TYPES} from '../../../source/RVX/reducer'
+ import zeroConfig from '../../configs/zero'
 
  import {
      WIDTH, HEIGHT, ITEM_WIDTH, ITEM_HEIGHT,
      DEBOUNCE_SCROLLING, DEBOUNCE_FILTERING,
- }  from '../source/RVX/constants'
+ }  from '../../../source/RVX/constants'
  
  
  
@@ -28,10 +28,10 @@
         });
         expect(state.headers.length).toBe(3);
      });
+
      it('does nothing on unexpected action type', () => {
         const state = init(zeroConfig),
             newState = reducer(state, {type: 'not expected action type'});
         expect(JSON.stringify(newState)).toBe(JSON.stringify(newState))
      });
- 
  });

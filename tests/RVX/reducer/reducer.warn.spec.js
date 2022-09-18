@@ -1,17 +1,17 @@
 /**
  * @jest-environment jsdom
  */
-import reducerFactory from '../source/RVX/reducer';
-import zeroConfig from './configs/zero';
-import WARNS from '../source/RVX/reducer/warns';
-import { getWarnMessage } from '../source/RVX/utils.js';
+import reducerFactory from '../../../source/RVX/reducer';
+import zeroConfig from '../../configs/zero';
+import WARNS from '../../../source/RVX/reducer/warns';
+import { getWarnMessage } from '../../../source/RVX/utils.js';
 
 import {
     WIDTH, HEIGHT, ITEM_WIDTH, ITEM_HEIGHT,
     DEBOUNCE_SCROLLING, DEBOUNCE_FILTERING,
     LIB
-} from '../source/RVX/constants';
-import { getConfig } from './utils';
+} from '../../../source/RVX/constants';
+import { getConfig } from '../../utils';
 
 const opts = { lib: LIB };
 
