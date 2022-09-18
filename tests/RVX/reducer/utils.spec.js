@@ -161,7 +161,7 @@ describe('getInitialGroupedData - work as expected', function () {
             });
         
             expect(spyInfo).toHaveBeenCalledTimes(1);
-            // this is risky since in the example might take more than 0ms :D :D :D 
+            // quite risky since in the example might take more than 0ms :D :D :D FAIL!
             expect(spyInfo).toHaveBeenCalledWith(...getTimeSpentMessage({params: {what: '__getGroupedInit', time: 0}, opts}));
         });
 
