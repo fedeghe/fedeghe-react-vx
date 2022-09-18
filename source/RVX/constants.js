@@ -47,3 +47,25 @@ export const CMPNAME = 'react-vx',
     MODE = 'table',
     MODES = ['table', 'grid'],
     UIE = 'data-uie';
+
+export default {
+    CMPNAME,
+    LIB,
+    GAP,
+    WIDTH,
+    HEIGHT,
+    ITEM_HEIGHT,
+    ITEM_WIDTH,
+    GROUP_COMPONENT_HEIGHT,
+    GLOBAL_FILTER,
+    RVX_ID,
+    DEBOUNCE_SCROLLING,
+    DEBOUNCE_FILTERING,
+    DEFAULT_LOADER,
+    NO_FILTER_DATA_MESSAGE,
+    UNGROUPED_LABEL,
+    FILTERS,
+    MODE,
+    MODES,
+    UIE
+};
