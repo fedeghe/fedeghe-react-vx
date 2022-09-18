@@ -1,14 +1,15 @@
 import { trakTime, mayWarnIf } from "../utils";
+import WARNS from "./warns";
 
 export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(entriesLength / elementsPerLine);
     
 // eslint-disable-next-line one-var
 export const getInitialGroupedData = ({data, grouping, elementsPerLine, opts = {}}) => {
         const trak = opts.trackTimes ? {start: +new Date} : null,
-            {groups, collapsible} = grouping,
+            {groups, ungroupedLabel, collapsible} = grouping,
             groupedEntries = data.reduce((acc, entry) => {
                 // find the first filter that let it pass, in case groups is not empty
-                let targetGroupLabel = grouping.ungroupedLabel;
+                let targetGroupLabel = ungroupedLabel;
                 if (groups.length) {
                     const matchingGroup = groups.find(({ grouper }) => grouper(entry));
                     if (matchingGroup) {
@@ -22,7 +23,7 @@ export const getInitialGroupedData = ({data, grouping, elementsPerLine, opts = {
                     acc[group.label] = {entries: []};
                     return acc;
                 }, {}),
-                [grouping.ungroupedLabel]: {entries: []}
+                [ungroupedLabel]: {entries: []}
             }),
 
             // O(groups length)
@@ -36,14 +37,21 @@ export const getInitialGroupedData = ({data, grouping, elementsPerLine, opts = {
                     if (collapsible) acc[label].collapsed = false;
                 } else {
                     mayWarnIf({
-                        condition: label !== grouping.ungroupedLabel,
-                        message: `group named \`${label}\` is empty thus ignored`,
+                        condition: label !== ungroupedLabel,
+                        message: WARNS.EMPTY_GROUP.description,
+                        params: {groupName: label},
                         opts
                     });
                 }
                 return acc;
             }, {});
-
+        mayWarnIf({
+            condition: ret[ungroupedLabel].entries.length > 0,
+            message: WARNS.OUTKAST_DATA.description,
+            params: {num: ret[ungroupedLabel].entries.length},
+            opts
+        });
+        
         if (opts.trakTimes) {
             trak.end = +new Date();
             trakTime({ what: '__getGroupedInit', time: trak.end - trak.start, opts });

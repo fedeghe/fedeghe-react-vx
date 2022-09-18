@@ -7,6 +7,7 @@ import {
     asJson,
     getErrorMessage,
     getWarnMessage,
+    paramsMessage,
     trakTime,
     doWarn, mayWarnIf,
     doThrow, throwIf,
@@ -113,6 +114,7 @@ describe('utils functions work as expected', function () {
             expect(e).toBe('MYLIB 🚨 throwing error')
         }
     });
+
     it('mayWarnIf - warning active/inactive', () => {
         mayWarnIf({condition: true, message: 'watch your back', opts: {lib: 'mylib', warning: true}});
         expect(spyWarn).toHaveBeenLastCalledWith("MYLIB 🙉 watch your back");
@@ -120,6 +122,7 @@ describe('utils functions work as expected', function () {
         mayWarnIf({condition: true, message: 'watch my back', opts: {lib: 'mylib'}});
         expect(spyWarn).toHaveBeenLastCalledWith("MYLIB 🙉 watch your back");
     });
+
     it('throwIf - condition true/false', () => {
         try {
             throwIf({condition: true, message: 'throwing error', opts: {lib:'mylib'}})
@@ -134,11 +137,40 @@ describe('utils functions work as expected', function () {
             expect(true).toBeFalsy();
         }
     });
+
     it('getErrorMessage', () => {
-        expect(getErrorMessage({ message: 'throwing many errors', opts: {lib:'mylib'}})).toBe('MYLIB 🚨 throwing many errors');
+        expect(getErrorMessage({ message: 'throwing many errors', opts: {lib:'mylib'}}))
+            .toBe('MYLIB 🚨 throwing many errors');
+        expect(getErrorMessage({
+            message: 'throwing many %what%',
+            opts: {lib:'mylib'},
+            params: {what: 'errors'}
+        })).toBe('MYLIB 🚨 throwing many errors');
     });
+
     it('getWarnMessage', () => {
         expect(getWarnMessage({ message: 'warning a lot', opts: {lib:'mylib'}})).toBe('MYLIB 🙉 warning a lot');
+        expect(getWarnMessage({
+            message: 'warning %howMuch%',
+            opts: {lib:'mylib'},
+            params: {howMuch: 'a lot'}
+        })).toBe('MYLIB 🙉 warning a lot');
+    });
+
+    it('paramsMessage', () => {
+        expect(paramsMessage({ message: 'warning a %what%', params: {what:'lot'}})).toBe('warning a lot');
+        expect(paramsMessage({ message: 'warning a %what%', params: {nope:'lot'}})).toBe('warning a ');
+        expect(paramsMessage({ message: 'warning a %w-1h-at%', params: {nope:'lot'}})).toBe('warning a ');
+        expect(paramsMessage({ message: 'set %one%.%one%, set %three%.%two%, set %two%.%three%', params: {one: 1, two: 2, three: '3'}})).toBe('set 1.1, set 3.2, set 2.3');
+        expect(paramsMessage({
+            message: 'set %one%.%one%, set %three%.%two%, set %donotmatch%',
+            params: {one: 1, two: 2, three: '3'},
+            leaveUnmatching: true
+        })).toBe('set 1.1, set 3.2, set donotmatch');
+        expect(paramsMessage({
+            message: 'set %one%.%one%, set %three%.%two%, set %donotmatch%',
+            params: {one: 1, two: 2, three: '3'},
+        })).toBe('set 1.1, set 3.2, set ');
     });
 
     it('escapeComma', () => {

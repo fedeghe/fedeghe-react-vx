@@ -1,7 +1,11 @@
 import {
     getLinesNumber,
-    getInitialGroupedData
+    getInitialGroupedData,
 } from '../source/RVX/reducer/utils'
+import {
+    getWarnMessage
+} from '../source/RVX/utils'
+import WARNS  from '../source/RVX/reducer/warns'
 import { generateRowData } from './utils'
 import data from './data/1001.json'
 
@@ -46,35 +50,69 @@ describe('getInitialGroupedData - work as expected', function () {
         spyWarn = jest.spyOn(console, 'warn');
     });
     afterEach(jest.restoreAllMocks);
+
+    describe('the two common mode driven cases', () => {
     
-    it('returns the expected - item 100% - table', () => {
-        const elementsPerLine = 1,
-            initialGroupedData = getInitialGroupedData({
-                data,
-                grouping: {
-                    groups,
-                    groupHeader: {
-                        Component: () => {},
-                        height: 10
+        it('returns the expected - item 100% - table', () => {
+            const elementsPerLine = 1,
+                initialGroupedData = getInitialGroupedData({
+                    data,
+                    grouping: {
+                        groups,
+                        groupHeader: {
+                            Component: () => {},
+                            height: 10
+                        },
+                        ungroupedLabel,
+                        collapsible : true
                     },
-                    ungroupedLabel,
-                    collapsible : true
-                },
-                elementsPerLine,
+                    elementsPerLine,
+                });
+
+            groupLabels.forEach(groupLabel => {
+                expect(groupLabel in initialGroupedData).toBeTruthy()
+                expect(nums[groupLabel]).toBe(getLinesNumber({entriesLength: nums[groupLabel], elementsPerLine}))
+                expect(initialGroupedData[groupLabel].lines).toBe(nums[groupLabel])
+                expect(initialGroupedData[groupLabel].entries.length).toBe(nums[groupLabel])
+                expect(initialGroupedData[groupLabel].collapsed).toBe(false)
             });
-
-        groupLabels.forEach(groupLabel => {
-            expect(groupLabel in initialGroupedData).toBeTruthy()
-            expect(nums[groupLabel]).toBe(getLinesNumber({entriesLength: nums[groupLabel], elementsPerLine}))
-            expect(initialGroupedData[groupLabel].lines).toBe(nums[groupLabel])
-            expect(initialGroupedData[groupLabel].entries.length).toBe(nums[groupLabel])
-            expect(initialGroupedData[groupLabel].collapsed).toBe(false)
         });
-    });
 
-    it('returns the expected - item 25% - grid', () => {
-        const elementsPerLine = 4,
-            initialGroupedData = getInitialGroupedData({
+        it('returns the expected - item 25% - grid', () => {
+            const elementsPerLine = 4,
+                initialGroupedData = getInitialGroupedData({
+                    data,
+                    grouping: {
+                        groups,
+                        groupHeader: {
+                            Component: () => {},
+                            height: 10
+                        },
+                        ungroupedLabel,
+                        collapsible : true
+                    },
+                    elementsPerLine,
+                });
+            
+            groupLabels.forEach(groupLabel => {
+                expect(groupLabel in initialGroupedData).toBeTruthy()
+                expect(initialGroupedData[groupLabel].lines).toBe(getLinesNumber({entriesLength: nums[groupLabel], elementsPerLine}))
+                expect(initialGroupedData[groupLabel].entries.length).toBe(nums[groupLabel])
+                expect(initialGroupedData[groupLabel].collapsed).toBe(false)
+            });
+        });
+    })
+
+    describe('should warn when warning flag is active and:', () => {
+
+        it('some elements are out', () => {
+            const elementsPerLine = 4,
+                opts = {
+                    lib: 'my lib',
+                    warning: true
+                };
+
+            getInitialGroupedData({
                 data,
                 grouping: {
                     groups,
@@ -86,15 +124,52 @@ describe('getInitialGroupedData - work as expected', function () {
                     collapsible : true
                 },
                 elementsPerLine,
+                opts
             });
         
-        groupLabels.forEach(groupLabel => {
-            expect(groupLabel in initialGroupedData).toBeTruthy()
-            expect(initialGroupedData[groupLabel].lines).toBe(getLinesNumber({entriesLength: nums[groupLabel], elementsPerLine}))
-            expect(initialGroupedData[groupLabel].entries.length).toBe(nums[groupLabel])
-            expect(initialGroupedData[groupLabel].collapsed).toBe(false)
+            expect(spyWarn).toHaveBeenCalledWith(getWarnMessage({
+                message: WARNS.OUTKAST_DATA.description,
+                params: {num: nums[ungroupedLabel]},
+                opts
+            }));
         });
-    });
+
+        it('a group is empty', () => {
+            const elementsPerLine = 4,
+                opts = {
+                    lib: 'my lib',
+                    warning: true
+                },
+                impossibleGroupName = 'impossible';
+
+            getInitialGroupedData({
+                data,
+                grouping: {
+                    groups: [
+                        ...groups,
+                        {
+                            label: impossibleGroupName,
+                            grouper: row => row.id > Infinity
+                        }
+                    ],
+                    groupHeader: {
+                        Component: () => {},
+                        height: 10
+                    },
+                    ungroupedLabel,
+                    collapsible : true
+                },
+                elementsPerLine,
+                opts
+            });
+        
+            expect(spyWarn).toHaveBeenCalledWith(getWarnMessage({
+                message: WARNS.EMPTY_GROUP.description,
+                params: {groupName: impossibleGroupName},
+                opts
+            }));
+        });
+    })
 
 
 });

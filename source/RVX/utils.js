@@ -29,17 +29,23 @@ const prefix = 'RVX_',
 
     trakTime = ({ what, time, opts }) => console.info(`%c${opts.lib.toUpperCase()} 🐢 ${what} spent ${time}ms`, 'color:DodgerBlue'),
 
-    doWarn = ({ message, opts }) => opts.warning && console.warn(getWarnMessage({message, opts})),
+    doWarn = ({ message, params = {}, opts }) => opts.warning && console.warn(getWarnMessage({message, params, opts})),
 
-    doThrow = ({ message, opts }) => {throw getErrorMessage({message, opts});},
+    doThrow = ({ message, params = {}, opts }) => {throw getErrorMessage({message, params, opts});},
 
-    mayWarnIf = ({ condition, message, opts }) => condition && doWarn({message, opts}),
+    mayWarnIf = ({ condition, message, params = {}, opts }) => condition && doWarn({message, params, opts}),
 
-    throwIf = ({ condition, message, opts }) => condition && doThrow({message, opts}),
+    throwIf = ({ condition, message, params = {}, opts }) => condition && doThrow({message, params, opts}),
 
-    getErrorMessage = ({message, opts }) => `${opts.lib.toUpperCase()} 🚨 ${message}`,
+    getErrorMessage = ({message, params = {}, opts }) => `${opts.lib.toUpperCase()} 🚨 ${paramsMessage({message, params})}`,
 
-    getWarnMessage = ({message, opts }) => `${opts.lib.toUpperCase()} 🙉 ${message}`,
+    getWarnMessage = ({message, params = {}, opts }) => `${opts.lib.toUpperCase()} 🙉 ${paramsMessage({message, params})}`,
+
+    paramsMessage = ({message, params = {}, leaveUnmatching = false}) =>
+        Object.entries(params).reduce(
+            (acc, [seek, rep]) => acc.replace(new RegExp('%' + seek + '%', 'g'), rep)
+        , message)
+        .replace(/%([A-z,0-9,_,-]*)%/, (_, $1) => leaveUnmatching ? $1 : ''),
 
     uniqueID = {
         toString: () => {
@@ -58,6 +64,7 @@ export {
     asJson,
     getErrorMessage,
     getWarnMessage,
+    paramsMessage,
     trakTime,
     doWarn, mayWarnIf,
     doThrow, throwIf,
