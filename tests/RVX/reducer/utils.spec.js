@@ -1,11 +1,11 @@
 import each from 'jest-each';
 
-import { getLinesNumber, getInitialGroupedData } from '../../../source/RVX/reducer/utils'
-import { getWarnMessage, getTimeSpentMessage } from '../../../source/RVX/utils'
-import WARNS  from '../../../source/RVX/reducer/warns'
+import { getLinesNumber, getInitialGroupedData } from '../../../source/RVX/reducer/utils';
+import { getWarnMessage, getTimeSpentMessage } from '../../../source/RVX/utils';
+import WARNS  from '../../../source/RVX/reducer/warns';
 
-import data from './../../data/1001.json'
-import groups from './../../groups/group1001'
+import data from './../../data/1001.json';
+import groups from './../../groups/group1001';
 
 describe('getInitialGroupedData - work as expected', function () {
     const ungroupedLabel = 'ungrouped group',
@@ -28,7 +28,7 @@ describe('getInitialGroupedData - work as expected', function () {
     beforeAll(() => {
         info = console.info; console.info = jest.fn();
         warn = console.warn; console.warn = jest.fn();
-    })    
+    });
     afterAll(() => {
         console.info = info;
         console.warn = warn;
@@ -43,6 +43,7 @@ describe('getInitialGroupedData - work as expected', function () {
 
         each(
             [[1, 100], [4, 25], [2, 34], [3, 33], [10, 10]]
+        // eslint-disable-next-line no-unused-vars
         ).test('returns the expected %d items => %d%', (elementsPerLine, _) => {
             const initialGroupedData = getInitialGroupedData({
                 data,

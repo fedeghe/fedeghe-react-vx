@@ -1,3 +1,4 @@
+import each from 'jest-each';
 import {
     isFunction,
     debounce,
@@ -13,7 +14,7 @@ import {
     doWarn, mayWarnIf,
     doThrow, throwIf,
     uniqueID
-} from '../source/RVX/utils'
+} from '../source/RVX/utils';
 
 describe('utils functions work as expected', function () {
     let info, warn,
@@ -26,7 +27,7 @@ describe('utils functions work as expected', function () {
     beforeAll(() => {
         info = console.info; console.info = jest.fn();
         warn = console.warn; console.warn = jest.fn();
-    })    
+    });
     afterAll(() => {
         console.info = info;
         console.warn = warn;
@@ -39,24 +40,24 @@ describe('utils functions work as expected', function () {
     
     it('isFunction', () => {
         const funcs = [
-            () => { },
-            function s() { },
-            function () { }
-        ]
-        funcs.forEach(f => expect(isFunction(f)).toBeTruthy())
-        const unfuncs = [
-            1,
-            true,
-            'hello',
-            Symbol('hi'),
-            null,
-        ]
-        unfuncs.forEach(f => expect(isFunction(f)).toBeFalsy())
+                () => { },
+                function s() { },
+                function () { }
+            ],
+            unfuncs = [
+                1,
+                true,
+                'hello',
+                Symbol('hi'),
+                null,
+            ];
+        funcs.forEach(f => expect(isFunction(f)).toBeTruthy());
+        unfuncs.forEach(f => expect(isFunction(f)).toBeFalsy());
     });
 
     it('debounce', () => {
-        let y = 0
-        const r = debounce(v => { y = v }, 200);
+        let y = 0;
+        const r = debounce(v => { y = v;}, 200);
         r(10);
         expect(y).toBe(0);
         r(20);
@@ -71,52 +72,52 @@ describe('utils functions work as expected', function () {
         const e = [
             {id:1, name:'Federico'},
             {id:2, name:'Corrado'}
-        ]
-        expect(removeID(e, 'id')).toMatchObject([{name:'Federico'},{name:'Corrado'}])
+        ];
+        expect(removeID(e, 'id')).toMatchObject([{name:'Federico'},{name:'Corrado'}]);
     });
 
     it('asXsv', () => {
         const e = [
             {id:1, name:'Federico', surname: 'Ghedina', _ID: 321423},
             {id:2, name:'Corrado', surname: 'Crepo', _ID: 545632}
-        ]
-        expect(asXsv([{key:'id'}, {key: 'surname'}], e, '_ID', '|')).toBe(`id|surname\n1|Ghedina\n2|Crepo`)
-        expect(asXsv([{key:'name'},{key:'id'}, {key: 'surname'}], e, '_ID', '|')).toBe(`name|id|surname\nFederico|1|Ghedina\nCorrado|2|Crepo`)
-        expect(asXsv([{key:'id'}, {key: 'surname'},{key:'name'}], e, '_ID', '|')).toBe(`id|surname|name\n1|Ghedina|Federico\n2|Crepo|Corrado`)
+        ];
+        expect(asXsv([{key:'id'}, {key: 'surname'}], e, '_ID', '|')).toBe(`id|surname\n1|Ghedina\n2|Crepo`);
+        expect(asXsv([{key:'name'},{key:'id'}, {key: 'surname'}], e, '_ID', '|')).toBe(`name|id|surname\nFederico|1|Ghedina\nCorrado|2|Crepo`);
+        expect(asXsv([{key:'id'}, {key: 'surname'},{key:'name'}], e, '_ID', '|')).toBe(`id|surname|name\n1|Ghedina|Federico\n2|Crepo|Corrado`);
     });
 
     it('asJson', () => {
         const e = [
             {id:1, name:'Federico'},
             {id:2, name:'Corrado'}
-        ]
-        expect(asJson(e, 'id')).toMatchObject([{name:'Federico'},{name:'Corrado'}])
+        ];
+        expect(asJson(e, 'id')).toMatchObject([{name:'Federico'},{name:'Corrado'}]);
     });
 
     it('trakTime', () => {
         const opts = {lib:'mylib'},
             params = {what: 'methodX', time: 123};
-        trakTime({...params, opts})
+        trakTime({...params, opts});
         expect(spyInfo).toHaveBeenLastCalledWith(
             ...getTimeSpentMessage({params, opts})
         );
     });
 
     it('doWarn - warning active/inactive', () => {
-        doWarn({message: 'watch out', opts: {lib:'mylib', warning: true}})
+        doWarn({message: 'watch out', opts: {lib:'mylib', warning: true}});
         expect(spyWarn).toHaveBeenLastCalledWith("MYLIB 🙉 watch out");
-        expect(spyWarn).toBeCalledTimes(1)
+        expect(spyWarn).toBeCalledTimes(1);
     
-        doWarn({message: 'watch in', opts: {lib:'mylib'}})
+        doWarn({message: 'watch in', opts: {lib:'mylib'}});
         expect(spyWarn).toHaveBeenLastCalledWith("MYLIB 🙉 watch out");
     });
 
     it('doThrow', () => {
         try {
-            doThrow({message: 'throwing error', opts: {lib:'mylib'}})
+            doThrow({message: 'throwing error', opts: {lib:'mylib'}});
             expect(true).toBeFalsy();
         } catch (e) {
-            expect(e).toBe('MYLIB 🚨 throwing error')
+            expect(e).toBe('MYLIB 🚨 throwing error');
         }
     });
 
@@ -130,13 +131,13 @@ describe('utils functions work as expected', function () {
 
     it('throwIf - condition true/false', () => {
         try {
-            throwIf({condition: true, message: 'throwing error', opts: {lib:'mylib'}})
+            throwIf({condition: true, message: 'throwing error', opts: {lib:'mylib'}});
             expect(true).toBeFalsy();
         } catch (e) {
-            expect(e).toBe('MYLIB 🚨 throwing error')
+            expect(e).toBe('MYLIB 🚨 throwing error');
         }
         try {
-            throwIf({condition: false, message: 'throwing error', opts: {lib:'mylib'}})
+            throwIf({condition: false, message: 'throwing error', opts: {lib:'mylib'}});
             expect(true).toBeTruthy();
         } catch (e) {
             expect(true).toBeFalsy();
@@ -182,14 +183,15 @@ describe('utils functions work as expected', function () {
         const e = {
             in:[',', ',,', 'a,b,c', '', 'ciao.ciao'],
             out:['\\,', '\\,\\,', 'a\\,b\\,c', '', 'ciao.ciao'],
-        }
-        e.in.forEach((c, i) => expect(escapeComma(c)).toBe(e.out[i]))
+        };
+        e.in.forEach((c, i) => expect(escapeComma(c)).toBe(e.out[i]));
     });
 
-    it('uniqueID', () => {
-        expect(`${uniqueID}`).toMatch(/RVX_(\d*)/)
-        expect(`${uniqueID}`).toMatch(/RVX_(\d*)/)
-        expect(`${uniqueID}`).toMatch(/RVX_(\d*)/)
+    describe('uniqueID', () => {
+        const r = Array.from({length: 1e3}, () => `${uniqueID}`),
+            setR = new Set(r);
+        each(r).test('%s has the expected format', e => expect(e).toMatch(/RVX_(\d*)/));
+        expect(setR.size).toBe(r.length);
     });
 
 });

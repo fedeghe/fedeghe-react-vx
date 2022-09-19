@@ -6,11 +6,7 @@ import zeroConfig from '../../configs/zero';
 import WARNS from '../../../source/RVX/reducer/warns';
 import { getWarnMessage } from '../../../source/RVX/utils.js';
 
-import {
-    WIDTH, HEIGHT, ITEM_WIDTH, ITEM_HEIGHT,
-    DEBOUNCE_SCROLLING, DEBOUNCE_FILTERING,
-    LIB
-} from '../../../source/RVX/constants';
+import { LIB } from '../../../source/RVX/constants';
 import { getConfig } from '../../utils';
 
 const opts = { lib: LIB };
@@ -20,7 +16,7 @@ describe('reducer - init - warns the expected', function () {
     let warn, spy;
 
     // mute console warn
-    beforeAll(() => {warn = console.warn; console.warn = jest.fn();})    
+    beforeAll(() => {warn = console.warn; console.warn = jest.fn();});
     afterAll(() => {console.warn = warn; });
     
     
@@ -32,7 +28,7 @@ describe('reducer - init - warns the expected', function () {
         cnf.settings = {
             mode : 'grid',
             warning: true
-        }
+        };
         init(cnf);
         expect(spy).toHaveBeenCalledWith(getWarnMessage({
             message: WARNS.GRIND_ITEM_NOT_SET.description,
@@ -45,8 +41,8 @@ describe('reducer - init - warns the expected', function () {
         const cnf = getConfig(zeroConfig);
         cnf.settings = {
             warning: true
-        }
-        delete cnf.data
+        };
+        delete cnf.data;
         init(cnf);
         expect(spy).toHaveBeenCalledWith(getWarnMessage({
             message: WARNS.NO_DATA.description,
@@ -58,8 +54,8 @@ describe('reducer - init - warns the expected', function () {
         const cnf = getConfig(zeroConfig);
         cnf.settings = {
             warning: true
-        }
-        cnf.data = []
+        };
+        cnf.data = [];
         init(cnf);
         expect(spy).toHaveBeenCalledWith(getWarnMessage({
             message: WARNS.NO_DATA.description,

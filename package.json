@@ -12,7 +12,7 @@
         "cover": "jest --coverage --collectCoverageFrom='source/**/*.js'",
         "coverw": "jest --coverage --collectCoverageFrom='source/**/*.js' --watch",
         "coveralls": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-        "lint": "eslint ./source/VX/*.*",
+        "lint": "eslint ./source/RVX/*.*",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook"
     },

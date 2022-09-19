@@ -7,4 +7,4 @@ export default [{
 },{
     label: 'high',
     grouper: row => row.id > 500 && row.id <= 900
-}]
+}];

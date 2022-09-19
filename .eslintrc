@@ -46,7 +46,15 @@
         }
     },
     "globals": {
-        "WebPageMonitor": true
+        "WebPageMonitor": true,
+        "describe": true,
+        "expect": true,
+        "it": true,
+        "beforeAll": true,
+        "afterAll": true,
+        "beforeEach": true,
+        "afterEach": true,
+        "jest": true
     },
-    "ignorePatterns": ["tests/*", "*.md", "dist/index.js"]
+    "ignorePatterns": ["*.md", "dist/index.js"]
 }
