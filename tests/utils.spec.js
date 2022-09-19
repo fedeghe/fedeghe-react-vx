@@ -187,9 +187,9 @@ describe('utils functions work as expected', function () {
     });
 
     it('uniqueID', () => {
-        expect(`${uniqueID}`).toBe('RVX_1')
-        expect(`${uniqueID}`).toBe('RVX_2')
-        expect(`${uniqueID}`).toBe('RVX_3')
+        expect(`${uniqueID}`).toMatch(/RVX_(\d*)/)
+        expect(`${uniqueID}`).toMatch(/RVX_(\d*)/)
+        expect(`${uniqueID}`).toMatch(/RVX_(\d*)/)
     });
 
 });
