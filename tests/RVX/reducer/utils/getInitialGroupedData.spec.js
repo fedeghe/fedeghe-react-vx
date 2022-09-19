@@ -1,20 +1,17 @@
 import each from 'jest-each';
 
-import { getLinesNumber, getInitialGroupedData } from '../../../source/RVX/reducer/utils';
-import { getWarnMessage, getTimeSpentMessage } from '../../../source/RVX/utils';
-import WARNS  from '../../../source/RVX/reducer/warns';
+import { getLinesNumber, getInitialGroupedData, getAllocation } from '../../../../source/RVX/reducer/utils';
+import { getWarnMessage, getTimeSpentMessage } from '../../../../source/RVX/utils';
+import WARNS  from '../../../../source/RVX/reducer/warns';
 
-import data from './../../data/1001.json';
-import groups from './../../groups/group1001';
+import { UNGROUPED_LABEL } from '../../../../source/RVX/constants';
+
+import data from '../../../data/1001.json';
+import groups from '../../../groups/group1001';
+import expectedNums from '../../../groups/expected1001';
 
 describe('getInitialGroupedData - work as expected', function () {
     const ungroupedLabel = 'ungrouped group',
-        nums = {
-            lower: 200,
-            mid: 300,
-            high: 400,
-            [ungroupedLabel]: 101
-        },
         groupLabels = groups.map(g => g.label);
 
     let info, warn,
@@ -40,7 +37,6 @@ describe('getInitialGroupedData - work as expected', function () {
     afterEach(jest.restoreAllMocks);
 
     describe('the two common mode driven cases', () => {
-
         each(
             [[1, 100], [4, 25], [2, 34], [3, 33], [10, 10]]
         // eslint-disable-next-line no-unused-vars
@@ -53,16 +49,15 @@ describe('getInitialGroupedData - work as expected', function () {
                         Component: () => {},
                         height: 10
                     },
-                    ungroupedLabel,
+                    ungroupedLabel: UNGROUPED_LABEL,
                     collapsible : true
                 },
                 elementsPerLine,
             });
-
             groupLabels.forEach(groupLabel => {
                 expect(groupLabel in initialGroupedData).toBeTruthy();
-                expect(initialGroupedData[groupLabel].lines).toBe(getLinesNumber({entriesLength: nums[groupLabel], elementsPerLine}));
-                expect(initialGroupedData[groupLabel].entries.length).toBe(nums[groupLabel]);
+                expect(initialGroupedData[groupLabel].lines).toBe(getLinesNumber({entriesLength: expectedNums[groupLabel], elementsPerLine}));
+                expect(initialGroupedData[groupLabel].entries.length).toBe(expectedNums[groupLabel]);
                 expect(initialGroupedData[groupLabel].collapsed).toBe(false);
             });
         });
@@ -70,7 +65,6 @@ describe('getInitialGroupedData - work as expected', function () {
 
 
     describe('should warn when warning flag is active and:', () => {
-
         it('some elements are out', () => {
             const elementsPerLine = 4,
                 opts = {
@@ -85,7 +79,7 @@ describe('getInitialGroupedData - work as expected', function () {
                         Component: () => {},
                         height: 10
                     },
-                    ungroupedLabel,
+                    ungroupedLabel: UNGROUPED_LABEL,
                     collapsible : true
                 },
                 elementsPerLine,
@@ -93,7 +87,7 @@ describe('getInitialGroupedData - work as expected', function () {
             });
             expect(spyWarn).toHaveBeenCalledWith(getWarnMessage({
                 message: WARNS.OUTKAST_DATA.description,
-                params: {num: nums[ungroupedLabel]},
+                params: {num: expectedNums[UNGROUPED_LABEL]},
                 opts
             }));
         });
@@ -135,7 +129,6 @@ describe('getInitialGroupedData - work as expected', function () {
 
 
     describe('should trak times when trakTimes flag is active:', () => {
-
         it('tracks time as expected', () => {
             const elementsPerLine = 4,
                 opts = {
@@ -161,6 +154,8 @@ describe('getInitialGroupedData - work as expected', function () {
             // quite risky since in the example might take more than 0ms :D :D :D FAIL!
             expect(spyInfo).toHaveBeenCalledWith(...getTimeSpentMessage({params: {what: '__getGroupedInit', time: 0}, opts}));
         });
-
     });
 });
+
+/* ---------------------------------------------------------------- */
+

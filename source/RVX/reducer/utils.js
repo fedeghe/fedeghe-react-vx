@@ -1,10 +1,9 @@
 import { trakTime, mayWarnIf } from "../utils";
 import WARNS from "./warns";
 
-export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(entriesLength / elementsPerLine);
-    
-// eslint-disable-next-line one-var
-export const getInitialGroupedData = ({data, grouping, elementsPerLine, opts = {}}) => {
+export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(entriesLength / elementsPerLine),
+
+    getInitialGroupedData = ({data, grouping, elementsPerLine, opts = {}}) => {
         const trak = opts.trakTimes ? {start: +new Date} : null,
             {groups, ungroupedLabel, collapsible} = grouping,
             groupedEntries = data.reduce((acc, entry) => {
@@ -58,4 +57,8 @@ export const getInitialGroupedData = ({data, grouping, elementsPerLine, opts = {
             trakTime({ what: '__getGroupedInit', time: trak.end - trak.start, opts });
         }
         return ret;
+    },
+
+    getAllocation = () => {
+        return {};
     };

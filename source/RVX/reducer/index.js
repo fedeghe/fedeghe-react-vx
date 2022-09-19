@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import DefaultGridItem from './../components/DefaultGridItem';
 
 import {
@@ -94,3 +96,5 @@ export default () => ({
     reducer,
     init
 });
+
+/* eslint-enable */
