@@ -17,19 +17,19 @@
      testIdAttribute: "data-uie",
  });
  
- describe("VTable - basic", () => {
+ describe("DefaultGridItem", () => {
      it("should render as expected", () => {
         const row = {
-            name: 'Federico',
-            surname: 'Ghedina'
-        }
-         const { container, getByText } = render(
-             <DefaultGridItem row={row} />
-         );
-         expect(getByText('name')).toBeInTheDocument()
-         expect(getByText('Federico')).toBeInTheDocument()
-         expect(getByText('surname')).toBeInTheDocument()
-         expect(getByText('Ghedina')).toBeInTheDocument()
+                name: 'Federico',
+                surname: 'Ghedina'
+            },
+            { getByText } = render(
+                <DefaultGridItem row={row} />
+            );
+         expect(getByText('name')).toBeInTheDocument();
+         expect(getByText('Federico')).toBeInTheDocument();
+         expect(getByText('surname')).toBeInTheDocument();
+         expect(getByText('Ghedina')).toBeInTheDocument();
      });
  });
  
