@@ -59,6 +59,13 @@ export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(en
         return ret;
     },
 
+    /**
+     * groupedData,
+     * dimensions: {width, itemWidth, height, itemHeight},
+     * scrollTop,
+     * contentHeight = height - headerCaptionHeight - footerCAptionHeight 
+     */
+    /// WARN : scrollTop => 0
     getAllocation = () => {
         return {};
     };

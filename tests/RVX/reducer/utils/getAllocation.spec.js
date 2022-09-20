@@ -9,7 +9,7 @@ import groups from '../../../groups/group1001';
 import { UNGROUPED_LABEL } from '../../../../source/RVX/constants';
 import expectedNums from '../../../groups/expected1001';
 
-describe('getAllocation - work as expected', function () {
+describe('getAllocation - works as expected', function () {
 
     const groupLabels = groups.map(g => g.label);
 
@@ -41,7 +41,7 @@ describe('getAllocation - work as expected', function () {
             const elementsPerLine = 2,
                 mode = 'grid',
                 collapsible = true,
-                contentHeight = 400,
+                contentHeight = 400, // HEIGHT - headerCaptionHeight - footerCaptionHeight
                 headerHeight = 50,
                 itemHeight = 100,
                 groupedData = getInitialGroupedData({
