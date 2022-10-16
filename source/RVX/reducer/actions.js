@@ -10,8 +10,8 @@ const INIT = Symbol('initialise'),
     TOGGLE_COLUMN_VISIBILITY = Symbol('toggle a table column visibility'),
     SORT = Symbol('sort per column(table) or group(grid)'),
     UNSORT = Symbol('unsort column(table) or group(grid)'),
-    CELL_ENTER = Symbol('table mode: enter a cell'),
-    CELL_LEAVE = Symbol('table mode: leave a cell');
+    CELL_ENTER = Symbol('table layout: enter a cell'),
+    CELL_LEAVE = Symbol('table layout: leave a cell');
 
 
 // eslint-disable-next-line one-var

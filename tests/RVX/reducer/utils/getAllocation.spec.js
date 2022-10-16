@@ -1,6 +1,6 @@
 import each from 'jest-each';
 
-import { getLinesNumber, getInitialGroupedData, getAllocation } from '../../../../source/RVX/reducer/utils';
+import { getInitialGroupedData, getAllocation } from '../../../../source/RVX/reducer/utils';
 import { getWarnMessage, getTimeSpentMessage } from '../../../../source/RVX/utils';
 import WARNS  from '../../../../source/RVX/reducer/warns';
 
@@ -39,7 +39,7 @@ describe('getAllocation - works as expected', function () {
         it('grid case - 50%', () => {
 
             const elementsPerLine = 2,
-                mode = 'grid',
+                layout = 'grid',
                 collapsible = true,
                 contentHeight = 400, // HEIGHT - headerCaptionHeight - footerCaptionHeight
                 headerHeight = 50,
@@ -64,7 +64,7 @@ describe('getAllocation - works as expected', function () {
                     headerHeight,
                     itemHeight,
                     elementsPerLine,
-                    mode,
+                    layout,
                     opts: {
                         lib: 'my lib',
                         warning: true

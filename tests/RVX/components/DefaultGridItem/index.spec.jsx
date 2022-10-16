@@ -10,7 +10,7 @@
  import { configure } from "@testing-library/dom";
  
  
- import DefaultGridItem from "../../../../source/RVX/components/DefaultGridItem";
+ import DefaultGridItem from "../../../../source/RVX/components/grid/DefaultGridItem";
  
  
  configure({

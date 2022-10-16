@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import DefaultGridItem from './../components/DefaultGridItem';
+import DefaultGridItem from './../components/grid/DefaultGridItem';
 
 import {
     doThrow, uniqueID, trakTime,
@@ -12,7 +12,7 @@ import {
     RVX_ID, DEBOUNCE_SCROLLING, DEBOUNCE_FILTERING,
     NO_FILTER_DATA_MESSAGE, GROUP_COMPONENT_HEIGHT,
     UNGROUPED_LABEL, FILTERS, DEFAULT_LOADER, UIE,
-    GLOBAL_FILTER, WARNING, MODES, MODE,
+    GLOBAL_FILTER, WARNING, LAYOUTS, LAYOUT,
 } from '../constants';
 import { ACTION_TYPES } from './actions';
 import ERRORS from './errors';
@@ -31,7 +31,7 @@ const opts = {lib: LIB},
                     warning = 0,
                     gap = GAP,
                     uie = UIE,
-                    mode = MODE,
+                    layout = LAYOUT,
                     debounceTimes: {
                         scrolling = DEBOUNCE_SCROLLING,
                         filtering = DEBOUNCE_FILTERING
@@ -42,11 +42,11 @@ const opts = {lib: LIB},
 
             throwIf({ condition: !headers || !headers?.length, message: ERRORS.NO_HEADERS_PROVIDED.description, opts});
             throwIf({ condition: headers.some(h => !('key' in h)), message: ERRORS.HEADERS_UNKEYED.description, opts});
-            throwIf({ condition: !MODES.includes(mode), message: ERRORS.INIT_UNEXPECTED_MODE.description, opts });
+            throwIf({ condition: !(Object.values(LAYOUTS).includes(layout)), message: ERRORS.INIT_UNEXPECTED_LAYOUT.description, opts });
             throwIf({ condition: gap < 0, message: ERRORS.GAP_NEGATIVE.description, opts});
             
             if (warning) {
-                mayWarnIf({ condition: mode === 'grid' && !Item, message: WARNS.GRIND_ITEM_NOT_SET.description, opts });
+                mayWarnIf({ condition: layout === LAYOUTS.GRIDLAYOUT && !Item, message: WARNS.GRIND_ITEM_NOT_SET.description, opts });
                 mayWarnIf({ condition: !data || data.length === 0, message: WARNS.NO_DATA.description, opts });
             }
 
@@ -55,7 +55,7 @@ const opts = {lib: LIB},
                     trackTimes,
                     warning,
                     gap,
-                    mode,
+                    layout,
                     uie,
                     debounceTimes: {
                         scrolling,

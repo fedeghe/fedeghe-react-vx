@@ -6,7 +6,7 @@ import zeroConfig from '../../configs/zero';
 import WARNS from '../../../source/RVX/reducer/warns';
 import { getWarnMessage } from '../../../source/RVX/utils.js';
 
-import { LIB } from '../../../source/RVX/constants';
+import { LIB, LAYOUTS } from '../../../source/RVX/constants';
 import { getConfig } from '../../utils';
 
 const opts = { lib: LIB };
@@ -23,10 +23,10 @@ describe('reducer - init - warns the expected', function () {
     beforeEach(() => {spy = jest.spyOn(console, 'warn');});
     afterEach(jest.restoreAllMocks);
 
-    it('when `mode` is grid and no Item is given', () => {
+    it('when `layout` is grid and no Item is given', () => {
         const cnf = getConfig(zeroConfig);
         cnf.settings = {
-            mode : 'grid',
+            layout : LAYOUTS.GRIDLAYOUT,
             warning: true
         };
         init(cnf);

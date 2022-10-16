@@ -1,6 +1,6 @@
 import each from 'jest-each';
 
-import { getLinesNumber, getInitialGroupedData, getAllocation } from '../../../../source/RVX/reducer/utils';
+import { getLinesNumber, getInitialGroupedData } from '../../../../source/RVX/reducer/utils';
 import { getWarnMessage, getTimeSpentMessage } from '../../../../source/RVX/utils';
 import WARNS  from '../../../../source/RVX/reducer/warns';
 
@@ -36,7 +36,7 @@ describe('getInitialGroupedData - work as expected', function () {
     });
     afterEach(jest.restoreAllMocks);
 
-    describe('the two common mode driven cases', () => {
+    describe('the two common layout driven cases', () => {
         each(
             [[1, 100], [4, 25], [2, 34], [3, 33], [10, 10]]
         // eslint-disable-next-line no-unused-vars

@@ -3,6 +3,7 @@ import WARNS from "./warns";
 
 export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(entriesLength / elementsPerLine),
 
+
     getInitialGroupedData = ({data, grouping, elementsPerLine, opts = {}}) => {
         const trak = opts.trakTimes ? {start: +new Date} : null,
             {groups, ungroupedLabel, collapsible} = grouping,
@@ -43,12 +44,13 @@ export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(en
                     });
                 }
                 return acc;
-            }, {});
+            }, {}),
+            num = ret[ungroupedLabel].entries.length;
 
         mayWarnIf({
-            condition: ret[ungroupedLabel].entries.length > 0,
+            condition: !!num,
             message: WARNS.OUTKAST_DATA.description,
-            params: {num: ret[ungroupedLabel].entries.length},
+            params: {num},
             opts
         });
         
@@ -66,6 +68,11 @@ export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(en
      * contentHeight = height - headerCaptionHeight - footerCAptionHeight 
      */
     /// WARN : scrollTop => 0
-    getAllocation = () => {
+    getAllocation = ({
+        gruopedData,
+        scrollTop,
+        contentHeight, headerHeight, itemHeight,
+        elementsPerLine, layout, opts
+    }) => {
         return {};
     };

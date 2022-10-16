@@ -17,8 +17,8 @@ const {
     NO_FILTER_DATA_MESSAGE,
     UNGROUPED_LABEL,
     FILTERS,
-    MODE,
-    MODES,
+    LAYOUT,
+    LAYOUTS,
     UIE
 } = CONSTANTS;
 
@@ -43,8 +43,8 @@ describe('contants contains', function () {
             GLOBAL : 'GLOBAL',
             FIELDS : 'FIELDS',
         });
-        expect(MODE).toBe('table');
-        expect(MODES).toMatchObject(['table', 'grid']);
+        expect(LAYOUT).toBe(LAYOUTS.TABLELAYOUT);
+        expect(LAYOUTS).toMatchObject({});
         expect(UIE).toBe('data-uie');
     });
 

@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
  import reducerFactory from '../../../source/RVX/reducer';
+ import {LAYOUTS} from '../../../source/RVX/constants';
  import zeroConfig from '../../configs/zero';
 
  
@@ -14,7 +15,7 @@
             trackTimes: false,
             warning: 0,
             gap: 3,
-            mode: 'table',
+            layout: LAYOUTS.TABLELAYOUT,
         });
         expect(state.settings.debounceTimes).toMatchObject({
             scrolling: 50,

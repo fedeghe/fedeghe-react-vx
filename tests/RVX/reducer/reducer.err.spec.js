@@ -17,10 +17,10 @@
  describe('reducer - init - throws the expected', function () {
      const { init } = reducerFactory();
     
-     describe('when `mode` is', () => {
+     describe('when `layout` is', () => {
         it('null', () => {
             const cnf = getConfig(zeroConfig);
-            cnf.settings = { mode: null}; // not in MODES
+            cnf.settings = { layout: null}; // not in LAYOUTS
             try {
                 init(cnf);
                 // it must throw and not reach the following line
@@ -28,14 +28,14 @@
                 expect(false).toBeTruthy();
             } catch (e) {
                 expect(e).toBe(getErrorMessage({
-                    message: ERRORS.INIT_UNEXPECTED_MODE.description,
+                    message: ERRORS.INIT_UNEXPECTED_LAYOUT.description,
                     opts
                 }));
             }
          });   
          it('empty', () => {
             const cnf = getConfig(zeroConfig);
-            cnf.settings = {mode: ''}; // not in MODES
+            cnf.settings = {layout: ''}; // not in LAYOUTS
             try {
                 init(cnf);
                 // it must throw and not reach the following line
@@ -43,14 +43,14 @@
                 expect(false).toBeTruthy();
             } catch (e) {
                 expect(e).toBe(getErrorMessage({
-                    message: ERRORS.INIT_UNEXPECTED_MODE.description,
+                    message: ERRORS.INIT_UNEXPECTED_LAYOUT.description,
                     opts
                 }));
             }
          }); 
          it('unexpected', () => {
             const cnf = getConfig(zeroConfig);
-            cnf.settings = { mode: 'WUN'}; // not in MODES
+            cnf.settings = { layout: 'WUN'}; // not in LAYOUTS
             try {
                 init(cnf);
                 // it must throw and not reach the following line
@@ -58,7 +58,7 @@
                 expect(false).toBeTruthy();
             } catch (e) {
                 expect(e).toBe(getErrorMessage({
-                    message: ERRORS.INIT_UNEXPECTED_MODE.description,
+                    message: ERRORS.INIT_UNEXPECTED_LAYOUT.description,
                     opts
                 }));
             }
@@ -84,7 +84,7 @@
     
          it('is empty', () => {
             const cnf = getConfig(zeroConfig);
-            cnf.headers = []; // not in MODES
+            cnf.headers = []; // not in LAYOUTS
             try {
                 init(cnf);
                 // it must throw and not reach the following line

@@ -1,5 +1,11 @@
 import React from 'react';
+
+const TABLELAYOUT = Symbol('table layout'),
+    GRIDLAYOUT = Symbol('grid layout');
+
+
 // the name of the component
+// eslint-disable-next-line one-var
 export const CMPNAME = 'react-vx',
     LIB = 'react-vx',
     // how many lines extra viewport up and down before virtualization ? 
@@ -12,7 +18,7 @@ export const CMPNAME = 'react-vx',
     
     /**
      * item size:
-     * in case mode is table only the ITEM_HEIGHT is consumed
+     * in case layout is table only the ITEM_HEIGHT is consumed
      */
     ITEM_HEIGHT = 150,
     ITEM_WIDTH = 200,
@@ -44,8 +50,8 @@ export const CMPNAME = 'react-vx',
         GLOBAL : 'GLOBAL',
         FIELDS : 'FIELDS',
     },
-    MODE = 'table',
-    MODES = ['table', 'grid'],
+    LAYOUT = TABLELAYOUT,
+    LAYOUTS = {TABLELAYOUT, GRIDLAYOUT},
     UIE = 'data-uie';
 
 export default {
@@ -65,7 +71,7 @@ export default {
     NO_FILTER_DATA_MESSAGE,
     UNGROUPED_LABEL,
     FILTERS,
-    MODE,
-    MODES,
+    LAYOUT,
+    LAYOUTS,
     UIE
 };
