@@ -5,7 +5,7 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/fedeghe/react-vx/badge.svg)](https://snyk.io/test/github/fedeghe/react-vx)
 [![Build Status](https://travis-ci.org/fedeghe/react-vx.svg?branch=master)](https://travis-ci.org/fedeghe/react-vx)
 
-## install
+## install (wip => not published yet)
 
 `yarn add @fedeghe/react-vx`
 

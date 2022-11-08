@@ -1,4 +1,4 @@
-
+/* eslint-disable one-var */
 
 let id = 0,
     strid = 1;

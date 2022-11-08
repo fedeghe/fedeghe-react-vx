@@ -91,6 +91,7 @@ describe('utils functions work as expected', function () {
             {id:1, name:'Federico'},
             {id:2, name:'Corrado'}
         ];
+        // rem asJson by default expect a second param to be the id (rvxID) that is always removed
         expect(asJson(e, 'id')).toMatchObject([{name:'Federico'},{name:'Corrado'}]);
     });
 
