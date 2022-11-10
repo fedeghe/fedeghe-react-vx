@@ -38,7 +38,7 @@
             cnf.settings = {layout: ''}; // not in LAYOUTS
             try {
                 init(cnf);
-                // it must throw and not reach the following line 
+                // it must throw and not reach the following line
                 // where the test will correctly fail
                 expect(false).toBeTruthy();
             } catch (e) {
