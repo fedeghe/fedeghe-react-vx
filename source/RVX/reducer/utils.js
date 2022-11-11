@@ -68,6 +68,10 @@ export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(en
      * contentHeight = height - headerCaptionHeight - footerCAptionHeight 
      */
     /// WARN : scrollTop => 0
+    /**
+     * __getVirtualGroup of react-vgrid
+     * __getVirtual of react-vtable
+     */
     getAllocation = ({
         gruopedData,
         scrollTop,
