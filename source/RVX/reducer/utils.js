@@ -3,7 +3,21 @@ import WARNS from "./warns";
 
 export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(entriesLength / elementsPerLine),
 
-
+    /**
+     * This is supposed to run once at the very beginning 
+     * 
+     * Starting from raw data and the user grouping functions
+     * returns a hash with keys corresponding to the named groups,
+     * elements not selected are pushed into a special group (keyed ungroupedLabel)
+     * thus the response has a shape of :
+     *  {
+     *      [group.label]: {
+     *          entries: [],
+     *          lines: 
+     *          collapsed: false
+     *      }
+     *  }
+     */
     getInitialGroupedData = ({data, grouping, elementsPerLine, opts = {}}) => {
         const trak = opts.trakTimes ? {start: +new Date} : null,
             {groups, ungroupedLabel, collapsible} = grouping,
