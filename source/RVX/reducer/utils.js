@@ -17,6 +17,7 @@ export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(en
      *          collapsed: false
      *      }
      *  }
+     * throws some warnings
      */
     getInitialGroupedData = ({data, grouping, elementsPerLine, opts = {}}) => {
         const trak = opts.trakTimes ? {start: +new Date} : null,
