@@ -77,6 +77,9 @@ export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(en
     },
 
     /**
+     * the next step for this function is to skip all elements not rendering
+     * still considering the line gap
+     * 
      * groupedData,
      * dimensions: {width, itemWidth, height, itemHeight},
      * scrollTop,
