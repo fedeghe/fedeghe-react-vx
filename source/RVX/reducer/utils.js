@@ -91,7 +91,7 @@ export const getLinesNumber = ({entriesLength, elementsPerLine}) => Math.ceil(en
      * __getVirtual of react-vtable
      */
     getAllocation = ({
-        gruopedData,
+        groupedData,
         scrollTop,
         contentHeight, headerHeight, itemHeight,
         elementsPerLine, layout, opts
