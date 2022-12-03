@@ -15,7 +15,7 @@
  
  
  describe('reducer - init - throws the expected', function () {
-     const { init } = reducerFactory();
+     const { init, reducer } = reducerFactory();
     
      describe('when `layout` is', () => {
         it('null', () => {
@@ -63,8 +63,7 @@
                 }));
             }
          });   
-     });
-     
+     });     
      describe('when `headers`', () => {
         it('is null', () => {
             const cnf = getConfig(zeroConfig);
@@ -126,6 +125,21 @@
             } catch (e) {
                 expect(e).toBe(getErrorMessage({
                     message: ERRORS.GAP_NEGATIVE.description,
+                    opts
+                }));
+            }
+         });
+    
+     });
+     describe('when `action`', () => {
+        it('has no type', () => {
+            const cnf = getConfig(zeroConfig);
+            try {
+                const state = init(cnf);
+                reducer(state, {});
+            } catch (e) {
+                expect(e).toBe(getErrorMessage({
+                    message: ERRORS.REDUCER_NO_TYPE_IN_ACTION.description,
                     opts
                 }));
             }

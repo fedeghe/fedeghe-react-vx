@@ -63,7 +63,6 @@ describe('getInitialGroupedData - work as expected', function () {
         });
     });
 
-
     describe('should warn when warning flag is active and:', () => {
         it('some elements are out', () => {
             const elementsPerLine = 4,
@@ -126,7 +125,6 @@ describe('getInitialGroupedData - work as expected', function () {
             }));
         });
     });
-
 
     describe('should trak times when trakTimes flag is active:', () => {
         it('tracks time as expected', () => {

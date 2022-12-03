@@ -78,7 +78,7 @@ const opts = {lib: LIB},
                 [ACTION_TYPES.INIT]: () => ({config: payload}),
 
             }[type] || {};
-
+        throwIf({ condition: typeof type === 'undefined', message: ERRORS.REDUCER_NO_TYPE_IN_ACTION.description, opts});
         if (type in actions) {
             const newState = {
                 ...oldState,
