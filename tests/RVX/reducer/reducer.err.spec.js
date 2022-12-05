@@ -63,7 +63,8 @@
                 }));
             }
          });   
-     });     
+     });
+
      describe('when `headers`', () => {
         it('is null', () => {
             const cnf = getConfig(zeroConfig);
@@ -113,6 +114,7 @@
             }
          });
      });
+
      describe('when `gap` is', () => {
         it('negative', () => {
             const cnf = getConfig(zeroConfig);
@@ -131,6 +133,7 @@
          });
     
      });
+     
      describe('when `action`', () => {
         it('has no type', () => {
             const cnf = getConfig(zeroConfig);
@@ -144,8 +147,5 @@
                 }));
             }
          });
-    
      });
- 
-
  });
