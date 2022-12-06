@@ -84,7 +84,6 @@ const opts = {lib: LIB},
                 ...oldState,
                 ...actions[type](params())
             };
-
             return newState;
         }
         return oldState;
