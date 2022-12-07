@@ -1,32 +1,30 @@
-const INIT = Symbol('initialise'),
-    LOADING =  Symbol('loading'),
-    UNFILTER_FIELDS =  Symbol('unfilter all fields or  some'),
+const CELL_LEAVE = Symbol('table layout: leave a cell'),
+    CELL_ENTER = Symbol('table layout: enter a cell'),
     FILTER =  Symbol('apply all filters'),
-    UNFILTER =  Symbol('unfilter global or all'),
+    INIT = Symbol('initialise'),
+    LOADING =  Symbol('loading'),
+    SCROLL =  Symbol('scroll'),
+    SORT = Symbol('sort per column(table) or group(gri  d)'),
+    TOGGLE_COLUMN_VISIBILITY = Symbol('toggle a table column visibility'),
     TOGGLE_GROUP =  Symbol('toggle one group'),
     TOGGLE_GROUPS =  Symbol('toggle all groups'),
-    SCROLL =  Symbol('scroll'),
-    
-    TOGGLE_COLUMN_VISIBILITY = Symbol('toggle a table column visibility'),
-    SORT = Symbol('sort per column(table) or group(grid)'),
-    UNSORT = Symbol('unsort column(table) or group(grid)'),
-    CELL_ENTER = Symbol('table layout: enter a cell'),
-    CELL_LEAVE = Symbol('table layout: leave a cell');
-
+    UNFILTER =  Symbol('unfilter global or all'),
+    UNFILTER_FIELDS =  Symbol('unfilter all fields or  some'),
+    UNSORT = Symbol('unsort column(table) or group(grid)');
 
 // eslint-disable-next-line one-var
 export const ACTION_TYPES = {
-    INIT,
-    LOADING,
-    FILTER,
-    UNFILTER_FIELDS,
-    UNFILTER,
-    TOGGLE_GROUP,
-    TOGGLE_GROUPS,
-    TOGGLE_COLUMN_VISIBILITY,
-    SORT,
-    UNSORT,
     CELL_ENTER,
     CELL_LEAVE,
-    SCROLL
+    FILTER,
+    INIT,
+    LOADING,    
+    SCROLL,
+    SORT,
+    TOGGLE_COLUMN_VISIBILITY,
+    TOGGLE_GROUP,
+    TOGGLE_GROUPS,
+    UNFILTER,
+    UNFILTER_FIELDS,
+    UNSORT,
 };
