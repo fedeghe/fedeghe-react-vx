@@ -56,7 +56,9 @@ describe('getInitialGroupedData - work as expected', function () {
             });
             groupLabels.forEach(groupLabel => {
                 expect(groupLabel in initialGroupedData).toBeTruthy();
-                expect(initialGroupedData[groupLabel].lines).toBe(getLinesNumber({entriesLength: expectedNums[groupLabel], elementsPerLine}));
+                expect(initialGroupedData[groupLabel].lines).toBe(
+                    getLinesNumber({entriesLength: expectedNums[groupLabel], elementsPerLine})
+                );
                 expect(initialGroupedData[groupLabel].entries.length).toBe(expectedNums[groupLabel]);
                 expect(initialGroupedData[groupLabel].collapsed).toBe(false);
             });

@@ -25,11 +25,11 @@
             },
             { getByText } = render(
                 <DefaultGridItem row={row} />
-            );
-         expect(getByText('name')).toBeInTheDocument();
-         expect(getByText('Federico')).toBeInTheDocument();
-         expect(getByText('surname')).toBeInTheDocument();
-         expect(getByText('Ghedina')).toBeInTheDocument();
+            ),
+            keys = Object.keys(row),
+            values = Object.keys(row);
+        keys.forEach(k => expect(getByText(k)).toBeInTheDocument());
+        values.forEach(k => expect(getByText(k)).toBeInTheDocument());
      });
  });
  
