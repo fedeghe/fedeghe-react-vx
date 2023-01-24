@@ -21,7 +21,7 @@ import WARNS from './warns';
 
 const opts = {lib: LIB},
     actions = {
-        [ACTION_TYPES.INIT]: ({config}) => {
+        [ACTION_TYPES.INIT]: ({payload: config}) => {
             const {
                 headers,
                 Item,
@@ -70,19 +70,12 @@ const opts = {lib: LIB},
     },
 
     reducer = (oldState, action) => {
-        const { payload = {}, type } = action,
-            { x = null } = oldState,
-            {trakTimes, warning} = oldState,
-
-            params = {
-                [ACTION_TYPES.INIT]: () => ({config: payload}),
-
-            }[type] || {};
+        const { payload = {}, type } = action;
         throwIf({ condition: typeof type === 'undefined', message: ERRORS.REDUCER_NO_TYPE_IN_ACTION.description, opts});
         if (type in actions) {
             const newState = {
                 ...oldState,
-                ...actions[type](params())
+                ...actions[type]({payload, oldState})
             };
             return newState;
         }
