@@ -14,14 +14,14 @@ import {
     UNGROUPED_LABEL, FILTERS, DEFAULT_LOADER, UIE,
     GLOBAL_FILTER, WARNING, LAYOUTS, LAYOUT,
 } from '../constants';
-import { ACTION_TYPES } from './actions';
+import ACTIONS from './actions';
 import ERRORS from './errors';
 import WARNS from './warns';
 
 
 const opts = {lib: LIB},
     actions = {
-        [ACTION_TYPES.INIT]: ({payload: config}) => {
+        [ACTIONS.INIT]: ({payload: config}) => {
             const {
                 headers,
                 Item,
@@ -82,7 +82,7 @@ const opts = {lib: LIB},
         return oldState;
     },
 
-    init = cnf => reducer({}, {type: ACTION_TYPES.INIT, payload: cnf});
+    init = cnf => reducer({}, {type: ACTIONS.INIT, payload: cnf});
 
 export default () => ({
     reducer,

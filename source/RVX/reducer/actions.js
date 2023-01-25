@@ -1,4 +1,4 @@
-const CELL_LEAVE = Symbol('table layout: leave a cell'),
+export const CELL_LEAVE = Symbol('table layout: leave a cell'),
     CELL_ENTER = Symbol('table layout: enter a cell'),
     FILTER =  Symbol('apply all filters'),
     INIT = Symbol('initialise'),
@@ -13,7 +13,7 @@ const CELL_LEAVE = Symbol('table layout: leave a cell'),
     UNSORT = Symbol('unsort column(table) or group(grid)');
 
 // eslint-disable-next-line one-var
-export const ACTION_TYPES = {
+export default {
     CELL_ENTER,
     CELL_LEAVE,
     FILTER,

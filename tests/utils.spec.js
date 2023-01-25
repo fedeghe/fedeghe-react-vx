@@ -16,7 +16,7 @@ import {
     uniqueID
 } from '../source/RVX/utils';
 
-describe('utils functions work as expected', function () {
+describe('utils functions', function () {
     let info, warn,
         spyInfo, spyWarn;
     beforeEach(() => jest.useFakeTimers("modern"));
@@ -55,7 +55,7 @@ describe('utils functions work as expected', function () {
         unfuncs.forEach(f => expect(isFunction(f)).toBeFalsy());
     });
 
-    it('debounce', () => {
+    it('debounce works as expected', () => {
         let y = 0;
         const r = debounce(v => { y = v;}, 200);
         r(10);
@@ -68,7 +68,7 @@ describe('utils functions work as expected', function () {
         expect(y).toBe(20);
     });
 
-    it('removeID', () => {
+    it('removeID works as expected', () => {
         const e = [
             {id:1, name:'Federico'},
             {id:2, name:'Corrado'}
@@ -76,7 +76,7 @@ describe('utils functions work as expected', function () {
         expect(removeID(e, 'id')).toMatchObject([{name:'Federico'},{name:'Corrado'}]);
     });
 
-    it('asXsv', () => {
+    it('asXsv works as expected', () => {
         const e = [
             {id:1, name:'Federico', surname: 'Ghedina', _ID: 321423},
             {id:2, name:'Corrado', surname: 'Crepo', _ID: 545632}
@@ -86,7 +86,7 @@ describe('utils functions work as expected', function () {
         expect(asXsv([{key:'id'}, {key: 'surname'},{key:'name'}], e, '_ID', '|')).toBe(`id|surname|name\n1|Ghedina|Federico\n2|Crepo|Corrado`);
     });
 
-    it('asJson', () => {
+    it('asJson works as expected', () => {
         const e = [
             {id:1, name:'Federico'},
             {id:2, name:'Corrado'}
@@ -95,7 +95,7 @@ describe('utils functions work as expected', function () {
         expect(asJson(e, 'id')).toMatchObject([{name:'Federico'},{name:'Corrado'}]);
     });
 
-    it('trakTime', () => {
+    it('trakTime works as expected', () => {
         const opts = {lib:'mylib'},
             params = {what: 'methodX', time: 123};
         trakTime({...params, opts});
@@ -104,7 +104,7 @@ describe('utils functions work as expected', function () {
         );
     });
 
-    it('doWarn - warning active/inactive', () => {
+    it('doWarn - warning active/inactive works as expected', () => {
         doWarn({message: 'watch out', opts: {lib:'mylib', warning: true}});
         expect(spyWarn).toHaveBeenLastCalledWith("MYLIB 🙉 watch out");
         expect(spyWarn).toBeCalledTimes(1);
@@ -113,7 +113,7 @@ describe('utils functions work as expected', function () {
         expect(spyWarn).toHaveBeenLastCalledWith("MYLIB 🙉 watch out");
     });
 
-    it('doThrow', () => {
+    it('doThrow works as expected', () => {
         try {
             doThrow({message: 'throwing error', opts: {lib:'mylib'}});
             expect(true).toBeFalsy();
@@ -122,7 +122,7 @@ describe('utils functions work as expected', function () {
         }
     });
 
-    it('mayWarnIf - warning active/inactive', () => {
+    it('mayWarnIf - warning active/inactive works as expected', () => {
         mayWarnIf({condition: true, message: 'watch your back', opts: {lib: 'mylib', warning: true}});
         expect(spyWarn).toHaveBeenLastCalledWith("MYLIB 🙉 watch your back");
 
@@ -130,7 +130,7 @@ describe('utils functions work as expected', function () {
         expect(spyWarn).toHaveBeenLastCalledWith("MYLIB 🙉 watch your back");
     });
 
-    it('throwIf - condition true/false', () => {
+    it('throwIf - condition true/false works as expected', () => {
         try {
             throwIf({condition: true, message: 'throwing error', opts: {lib:'mylib'}});
             expect(true).toBeFalsy();
@@ -145,7 +145,7 @@ describe('utils functions work as expected', function () {
         }
     });
 
-    it('getErrorMessage', () => {
+    it('getErrorMessage works as expected', () => {
         expect(getErrorMessage({ message: 'throwing many errors', opts: {lib:'mylib'}}))
             .toBe('MYLIB 🚨 throwing many errors');
         expect(getErrorMessage({
@@ -155,7 +155,7 @@ describe('utils functions work as expected', function () {
         })).toBe('MYLIB 🚨 throwing many errors');
     });
 
-    it('getWarnMessage', () => {
+    it('getWarnMessage works as expected', () => {
         expect(getWarnMessage({ message: 'warning a lot', opts: {lib:'mylib'}})).toBe('MYLIB 🙉 warning a lot');
         expect(getWarnMessage({
             message: 'warning %howMuch%',
@@ -164,7 +164,7 @@ describe('utils functions work as expected', function () {
         })).toBe('MYLIB 🙉 warning a lot');
     });
 
-    it('paramsMessage', () => {
+    it('paramsMessage works as expected', () => {
         expect(paramsMessage({ message: 'warning a %what%', params: {what:'lot'}})).toBe('warning a lot');
         expect(paramsMessage({ message: 'warning a %what%', params: {nope:'lot'}})).toBe('warning a ');
         expect(paramsMessage({ message: 'warning a %w-1h-at%', params: {nope:'lot'}})).toBe('warning a ');
@@ -180,7 +180,7 @@ describe('utils functions work as expected', function () {
         })).toBe('set 1.1, set 3.2, set ');
     });
 
-    it('escapeComma', () => {
+    it('escapeComma works as expected', () => {
         const e = {
             in:[',', ',,', 'a,b,c', '', 'ciao.ciao'],
             out:['\\,', '\\,\\,', 'a\\,b\\,c', '', 'ciao.ciao'],
@@ -188,7 +188,7 @@ describe('utils functions work as expected', function () {
         e.in.forEach((c, i) => expect(escapeComma(c)).toBe(e.out[i]));
     });
 
-    describe('uniqueID', () => {
+    describe('uniqueID works as expected', () => {
         const r = Array.from({length: 1e3}, () => `${uniqueID}`),
             setR = new Set(r);
         each(r).test('%s has the expected format', e => expect(e).toMatch(/RVX_(\d*)/));
