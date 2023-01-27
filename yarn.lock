@@ -1251,6 +1251,11 @@
     minimatch "^3.1.2"
     strip-json-comments "^3.1.1"
 
+"@fedeghe/testone@^0.0.16":
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/@fedeghe/testone/-/testone-0.0.16.tgz#28f7c26586300a15faaba88953b7d822190262bd"
+  integrity sha512-8t6g10KQzYX5o1W6BpBRq2VCeHbACn0d6Jr7WfpLy4P6Gnll05jgHlWPT+87K3tci/k4kpWa/L1wMyjax5fdyw==
+
 "@gar/promisify@^1.0.1":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
