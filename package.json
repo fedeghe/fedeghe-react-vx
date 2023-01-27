@@ -9,6 +9,7 @@
         "build": "webpack --config webpack.prod.js",
         "test": "jest -u",
         "testwatch": "jest -u --watchAll",
+        "perf": "jest perf --testMatch=**/perf/**/*.perf.js",
         "cover": "jest --coverage --collectCoverageFrom='source/**/*.js'",
         "coverw": "jest --coverage --collectCoverageFrom='source/**/*.js' --watch",
         "coveralls": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
@@ -33,7 +34,9 @@
         "node": ">=6.0.0"
     },
     "devDependencies": {
-        "@babel/core": "^7.12.9",
+        "@babel/cli": "^7.20.7",
+        "@babel/core": "^7.20.12",
+        "@babel/node": "^7.20.7",
         "@babel/plugin-transform-runtime": "^7.12.10",
         "@babel/preset-env": "^7.12.7",
         "@babel/preset-react": "^7.12.7",
@@ -50,7 +53,6 @@
         "@testing-library/jest-dom": "^5.11.9",
         "@testing-library/react": "^13.3.0",
         "@testing-library/user-event": "^12.5.0",
-        "babel-cli": "^6.26.0",
         "babel-jest": "^26.6.3",
         "babel-loader": "^8.2.5",
         "babel-preset-env": "^1.7.0",
@@ -91,6 +93,5 @@
     },
     "files": [
         "./dist/*.js"
-    ],
-    "dependencies": {}
+    ]
 }
