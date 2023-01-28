@@ -52,6 +52,15 @@ const prefix = 'RVX_',
         , message)
         .replace(/%([A-z,0-9,_,-]*)%/, (_, $1) => leaveUnmatching ? $1 : ''),
 
+    paramsMessage2 = ({message, params = {}, leaveUnmatching = false}) => {
+        let msg = message;
+        for(let mk in params) {
+            // eslint-disable-next-line no-prototype-builtins
+                msg = msg.replace(new RegExp('%' + mk + '%', 'g'), params[mk]);
+        }
+        return msg.replace(/%([A-z,0-9,_,-]*)%/, (_, $1) => leaveUnmatching ? $1 : '');
+    },
+
     uniqueID = {
         toString: () => {
             count += 1;
@@ -71,6 +80,7 @@ export {
     getWarnMessage,
     getTimeSpentMessage,
     paramsMessage,
+    paramsMessage2,
     trakTime,
     doWarn, mayWarnIf,
     doThrow, throwIf,

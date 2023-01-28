@@ -1,26 +1,39 @@
 import testone from '@fedeghe/testone';
+import { paramsMessage, paramsMessage2 } from '../../../source/RVX/utils';
 
-const pow = (d, n) => d ** n,
-    powN = (d, n) => Math.pow(d, n),
-    ios = [{
-        in: [2, 3],
-        out: 8
-    },{
-        in: [4, 3],
-        out: 64
-    },{
-        in: (ioIndex, iteration) => {
-            return [ioIndex, iteration];
-        },
-        // in case a function is specified
-        // will receive the whole result (+ io index and iteration)
-        // and is expected to return true
-        out: (r, ioIndex, iteration) => r === ioIndex ** iteration
-    }];
+const ios = [{
+    in: [{
+        message: 'this is just %message%',
+        params: { message: 'a message' }
+    }],
+    out: 'this is just a message'
+},{
+    in: [{
+        message: '%a% %a% %b% %b% %c% %c% %d% %d%',
+        params: { a: 'a', b: 'b', c: 'c', d: 'd', }
+    }],
+    out: 'a a b b c c d d'
+}];
 
-describe('test pow', function () {
-    it('pow is faster', () => {
-        const res = testone(ios, [pow, powN], {iterations: 1e4});
-        expect (res.rank[0]).toBe('pow');
+describe('test paramsMessage', function () {
+    it('paramsMessage2 is faster (most of the times)', () => {
+        const res = testone(
+            ios,
+            [paramsMessage, paramsMessage2]
+        ),
+
+            { name } = Object.entries(res.fx)
+                .reduce(
+                    (acc, [k, v]) => {
+                        if (v < acc.value) {
+                            acc.name = k;
+                            acc.value = v;
+                        }
+                        return acc;
+                    }, { name: "", value: Infinity });
+
+        // console.log(JSON.stringify(res, null, 2))
+        expect(name).toBe('paramsMessage2');
+        expect(res.rank.length).toBe(2);
     });
 });
