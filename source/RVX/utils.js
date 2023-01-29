@@ -1,6 +1,5 @@
 let count = 0;
-const prefix = 'RVX_',
-    isFunction = f => typeof f === 'function',
+const isFunction = f => typeof f === 'function',
     debounce = (func, wait) => {
         let timeout;
         return (...params) => {
@@ -60,7 +59,7 @@ const prefix = 'RVX_',
         }
         return msg.replace(/%([A-z,0-9,_,-]*)%/, (_, $1) => leaveUnmatching ? $1 : '');
     },
-
+    prefix = 'RVX_',
     uniqueID = {
         toString: () => {
             count += 1;
@@ -68,7 +67,6 @@ const prefix = 'RVX_',
         }
     };
     
-
 export {
     isFunction,
     debounce,
